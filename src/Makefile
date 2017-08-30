@@ -1,13 +1,14 @@
+BUILDDIR := ../build
 CC := g++
 CFLAGS := -Wall
 LDLIBS := -lGL -lGLU -lglut
 
-lab-one: lab-one.cc bin
+lab-one: lab-one.cc $(BUILDDIR)
 	$(CC) $(CFLAGS) $< $(LDLIBS) -o $@
-	mv $@ bin
+	mv $@ $(BUILDDIR)
 
-bin:
-	mkdir bin
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
 
 clean:
-	rm -rf bin/*
+	rm -rf $(BUILDDIR)/*
