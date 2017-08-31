@@ -1,12 +1,6 @@
 #include <math.h>
 
-#include <GL/glut.h>
-
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
-
-#define POSITION_X (glutGet(GLUT_SCREEN_WIDTH) - SCREEN_WIDTH) / 2
-#define POSITION_Y (glutGet(GLUT_SCREEN_HEIGHT) - SCREEN_HEIGHT) / 2
+#include "../src/opengl-window.h"
 
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT);
@@ -22,13 +16,7 @@ void Display() {
   glFlush();
 }
 
-int main(int argc, char* argv[]) {
-  glutInit(&argc, argv);
-
-  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-  glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-  glutInitWindowPosition(POSITION_X, POSITION_Y);
-  glutCreateWindow("Cosine function");
+void Setup() {
   glutDisplayFunc(Display);
 
   glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
@@ -37,8 +25,11 @@ int main(int argc, char* argv[]) {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   gluOrtho2D(0.0, SCREEN_WIDTH, 0.0, SCREEN_HEIGHT);
+}
 
-  glutMainLoop();
+int main(int argc, char* argv[]) {
+  glutInit(&argc, argv);
+  CreateWindow("Cosine function", Setup);
 
   return 0;
 }

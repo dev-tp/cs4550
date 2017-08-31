@@ -2,13 +2,7 @@
 
 #include <iostream>
 
-#include <GL/glut.h>
-
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
-
-#define POSITION_X (glutGet(GLUT_SCREEN_WIDTH) - SCREEN_WIDTH) / 2
-#define POSITION_Y (glutGet(GLUT_SCREEN_HEIGHT) - SCREEN_HEIGHT) / 2
+#include "opengl-window.h"
 
 #define CIRCUMFERENCE M_PI * 2
 
@@ -78,15 +72,8 @@ void GetKey(unsigned char key, int x, int y) {
   Display();
 }
 
-int main(int argc, char* argv[]) {
-  glutInit(&argc, argv);
-
+void Setup() {
   std::cout << "Enter a value between 1 and 4 to render a different graph\n";
-
-  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-  glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-  glutInitWindowPosition(POSITION_X, POSITION_Y);
-  glutCreateWindow("Lab 1");
 
   glutDisplayFunc(Display);
   glutKeyboardFunc(GetKey);
@@ -97,8 +84,11 @@ int main(int argc, char* argv[]) {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   gluOrtho2D(0.0, SCREEN_WIDTH, 0.0, SCREEN_HEIGHT);
+}
 
-  glutMainLoop();
+int main(int argc, char* argv[]) {
+  glutInit(&argc, argv);
+  CreateWindow("Lab 1", Setup);
 
   return 0;
 }
