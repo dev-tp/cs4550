@@ -11,23 +11,18 @@ static int graph;
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT);
 
-  double half_screen_height = SCREEN_HEIGHT / 2.0;
+  if (0 <= graph && graph <= 2) {
+    glBegin(GL_POINTS);
 
-  if (graph == 0) {
-    glBegin(GL_POINTS);
-    for (double x = 0.0; x < CIRCUMFERENCE; x += 0.005) {
-      glVertex2d(100 * x, half_screen_height * cos(x) + half_screen_height);
+    double half_screen_height = SCREEN_HEIGHT / 2.0;
+    double limit = graph == 0 ? 1.0 : graph == 1 ? 2.0 : 3.0;
+    int a = graph == 0 ? 100 : 50;
+
+    for (double x = 0.0; x < CIRCUMFERENCE * limit; x += 0.005) {
+      double b = graph == 2 ? sin(x) : cos(x);
+      glVertex2d(a * x, half_screen_height * b + half_screen_height);
     }
-  } else if (graph == 1) {
-    glBegin(GL_POINTS);
-    for (double x = 0.0; x < CIRCUMFERENCE * 2; x += 0.005) {
-      glVertex2d(50 * x, half_screen_height * cos(x) + half_screen_height);
-    }
-  } else if (graph == 2) {
-    glBegin(GL_POINTS);
-    for (double x = 0.0; x < CIRCUMFERENCE * 3; x += 0.005) {
-      glVertex2d(50 * x, half_screen_height * sin(x) + half_screen_height);
-    }
+
   } else {
     // TODO Rotate star 180 degrees
     glBegin(GL_LINES);
