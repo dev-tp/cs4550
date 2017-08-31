@@ -64,7 +64,7 @@ void Display() {
 
 void GetKey(unsigned char key, int x, int y) {
   graph = 49 <= key && key <= 52 ? key - 49 : 0;
-  Display();
+  glutPostRedisplay();
 }
 
 void Setup() {
