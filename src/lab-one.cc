@@ -27,35 +27,27 @@ void Display() {
     // TODO Rotate star 180 degrees
     glBegin(GL_LINES);
 
-    glVertex2d(128 + 0.0, 5.5 * 30);
-    glVertex2d(128 + 5.0 * 30, 5.0 * 30);
+    double points[10][2] = {
+      { 0.0, 5.5 },
+      { 5.0, 5.0 },
+      { 6.5, 0.0 },
+      { 9.0, 5.0 },
+      { 14.0, 5.5 },
+      { 10.5, 9.0 },
+      { 12.0, 14.0 },
+      { 6.5, 11.5 },
+      { 2.0, 14.0 },
+      { 3.5, 9.0 }
+    };
 
-    glVertex2d(128 + 5.0 * 30, 5.0 * 30);
-    glVertex2d(128 + 6.5 * 30, 0.0);
+    glVertex2d(128 + points[0][0] * 30, points[0][1] * 30);
 
-    glVertex2d(128 + 6.5 * 30, 0.0);
-    glVertex2d(128 + 9.0 * 30, 5.0 * 30);
+    for (int i = 1; i < 10; i++) {
+      glVertex2d(128 + points[i][0] * 30, points[i][1] * 30);
+      glVertex2d(128 + points[i][0] * 30, points[i][1] * 30);
+    }
 
-    glVertex2d(128 + 9.0 * 30, 5.0 * 30);
-    glVertex2d(128 + 14.0 * 30, 5.5 * 30);
-
-    glVertex2d(128 + 14.0 * 30, 5.5 * 30);
-    glVertex2d(128 + 10.5 * 30, 9.0 * 30);
-
-    glVertex2d(128 + 10.5 * 30, 9.0 * 30);
-    glVertex2d(128 + 12.0 * 30, 14.0 * 30);
-
-    glVertex2d(128 + 12.0 * 30, 14.0 * 30);
-    glVertex2d(128 + 6.5 * 30, 11.5 * 30);
-
-    glVertex2d(128 + 6.5 * 30, 11.5 * 30);
-    glVertex2d(128 + 2.0 * 30, 14.0 * 30);
-
-    glVertex2d(128 + 2.0 * 30, 14.0 * 30);
-    glVertex2d(128 + 3.5 * 30, 9.0 * 30);
-
-    glVertex2d(128 + 3.5 * 30, 9.0 * 30);
-    glVertex2d(128 + 0.0, 5.5 * 30);
+    glVertex2d(128 + points[0][0] * 30, points[0][1] * 30);
   }
 
   glEnd();
