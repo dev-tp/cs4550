@@ -11,10 +11,10 @@ OBJECTS := $(SOURCES:$(SRCDIR)/%.cc=$(BLDDIR)/%.o)
 all: $(BLDDIR) lab-one
 
 lab-one: $(addprefix $(BLDDIR)/, lab-one.o opengl-window.o)
-	$(CC) $^ $(LDLIBS) -o $(addprefix $(BLDDIR)/, $@)
+	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 test: test/test-gl.cc $(BLDDIR)/opengl-window.o
-	$(CC) $^ $(LDLIBS) -o $(addprefix $(BLDDIR)/, $@)
+	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 $(OBJECTS): $(BLDDIR)/%.o : $(SRCDIR)/%.cc
 	$(CC) $(CFLAGS) $< -o $@
