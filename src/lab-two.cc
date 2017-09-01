@@ -6,22 +6,32 @@
 #include "opengl-window.h"
 
 bool mouse_pressed;
-int count = -1;
 int mouse_state;
 std::vector<std::array<int, 2>> points;
 
 void Display() {
-  if (mouse_state == 0 && mouse_pressed) {
-    int i = count % 4;
+  int count = points.size();
 
-    GLenum mode = i == 0 ? GL_POINTS : i == 1 ? GL_LINES : GL_POLYGON;
+  if (mouse_state == 0 && mouse_pressed) {
+    GLenum mode = (count - 1) == 0 ? GL_POINTS :
+                  (count - 1) == 1 ? GL_LINES  : GL_POLYGON;
 
     glBegin(mode);
 
     for (std::array<int, 2> point : points)
       glVertex2i(point[0], SCREEN_HEIGHT - point[1]);
 
+    if (count > 4) {
+      points.clear();
+      glClear(GL_COLOR_BUFFER_BIT);
+    }
+
     glEnd();
+  } else if (mouse_state == 1 && mouse_pressed) {
+    points.clear();
+    glClear(GL_COLOR_BUFFER_BIT);
+  } else if (count == 0) {
+    glClear(GL_COLOR_BUFFER_BIT);
   }
 
   mouse_pressed = false;
@@ -52,8 +62,6 @@ void RegisterMouseEvents(int button, int state, int x, int y) {
 
       std::array<int, 2> point = {x, y};
       points.push_back(point);
-
-      count++;
     } else if (button == GLUT_RIGHT_BUTTON) {
       mouse_state = 1;
     }
