@@ -24,7 +24,6 @@ void Display() {
     }
 
   } else {
-    // TODO Rotate star 180 degrees
     glBegin(GL_LINES);
 
     double points[10][2] = {
@@ -40,14 +39,14 @@ void Display() {
       { 3.5, 9.0 }
     };
 
-    glVertex2d(128 + points[0][0] * 30, points[0][1] * 30);
+    glVertex2d(128 + points[0][0] * 30, SCREEN_HEIGHT - points[0][1] * 30);
 
     for (int i = 1; i < 10; i++) {
-      glVertex2d(128 + points[i][0] * 30, points[i][1] * 30);
-      glVertex2d(128 + points[i][0] * 30, points[i][1] * 30);
+      glVertex2d(128 + points[i][0] * 30, SCREEN_HEIGHT - points[i][1] * 30);
+      glVertex2d(128 + points[i][0] * 30, SCREEN_HEIGHT - points[i][1] * 30);
     }
 
-    glVertex2d(128 + points[0][0] * 30, points[0][1] * 30);
+    glVertex2d(128 + points[0][0] * 30, SCREEN_HEIGHT - points[0][1] * 30);
   }
 
   glEnd();
