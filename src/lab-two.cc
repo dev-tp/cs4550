@@ -49,6 +49,10 @@ void GetKey(unsigned char key, int x, int y) {
 
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(r, g, b, 0.0f);
+
+    mouse_pressed = true;
+    mouse_state = 0;
+
     glutPostRedisplay();
   }
 }
