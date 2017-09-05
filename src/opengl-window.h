@@ -12,5 +12,6 @@
 #define POSITION_Y (glutGet(GLUT_SCREEN_HEIGHT) - SCREEN_HEIGHT) / 2
 
 void CreateWindow(std::string, void (*setup)());
+void DefaultSetup();
 
 #endif  // CS4550_OPENGL_WINDOW_H_

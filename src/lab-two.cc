@@ -79,12 +79,7 @@ void Setup() {
   glutKeyboardFunc(GetKey);
   glutMouseFunc(RegisterMouseEvents);
 
-  glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-  glColor3f(0.0f, 0.0f, 0.0f);
-  glPointSize(2.0f);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluOrtho2D(0.0, SCREEN_WIDTH, 0.0, SCREEN_HEIGHT);
+  DefaultSetup();
 }
 
 int main(int argc, char* argv[]) {
