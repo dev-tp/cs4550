@@ -4,7 +4,6 @@ struct Point {
   int x, y;
 };
 
-// TODO Centre squre on screen
 Point corners[2] = {
   {.x =  0, .y =  0},
   {.x = 10, .y = 10}
@@ -63,6 +62,12 @@ void Setup() {
 
 int main(int argc, char* argv[]) {
   glutInit(&argc, argv);
+
+  for (int i = 0; i < 2; i++) {
+    corners[i].x += HALF_SCREEN_WIDTH;
+    corners[i].y += HALF_SCREEN_HEIGHT;
+  }
+
   CreateWindow("Lab 3 (Practice)", Setup);
 
   return 0;
