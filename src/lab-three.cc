@@ -36,20 +36,20 @@ void GetSpecialKey(int key, int x, int y) {
   if (key == GLUT_KEY_RIGHT) {
     corners[0].x += 10;
     corners[1].x += 10;
-    glutPostRedisplay();
   } else if (key == GLUT_KEY_LEFT) {
     corners[0].x -= 10;
     corners[1].x -= 10;
-    glutPostRedisplay();
   } else if (key == GLUT_KEY_UP) {
     corners[0].y += 10;
     corners[1].y += 10;
-    glutPostRedisplay();
   } else if (key == GLUT_KEY_DOWN) {
     corners[0].y -= 10;
     corners[1].y -= 10;
-    glutPostRedisplay();
+  } else {
+    return;
   }
+
+  glutPostRedisplay();
 }
 
 void Setup() {
