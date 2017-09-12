@@ -8,7 +8,7 @@ SRCDIR := src
 SOURCES := $(wildcard $(SRCDIR)/*.cc)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.cc=$(BLDDIR)/%.o)
 
-all: $(BLDDIR) lab-one lab-two lab-three lab-four
+all: $(BLDDIR) lab-one lab-two lab-three lab-four lab-five
 
 lab-one: $(addprefix $(BLDDIR)/, lab-one.o opengl-window.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
@@ -20,6 +20,9 @@ lab-three: $(addprefix $(BLDDIR)/, lab-three.o opengl-window.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 lab-four: $(addprefix $(BLDDIR)/, lab-four.o opengl-window.o)
+	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
+
+lab-five: $(addprefix $(BLDDIR)/, lab-five.o opengl-window.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 test: test/test-gl.cc $(BLDDIR)/opengl-window.o
