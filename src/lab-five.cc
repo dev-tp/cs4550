@@ -23,30 +23,19 @@ void Display() {
 }
 
 void Idle() {
-  static int count = 0;
+  usleep(35000);
 
-  sleep(1);
+  a -= 2;
+  b -= 1;
+  c -= 3;
+  d += 2;
 
-  if (count % 3 == 0) {
-    // Hexagon
+  if (a == 40) {
     a = 100;
     b = 25;
     c = 75;
     d = 0;
-  } else if (count % 3 == 1) {
-    a = 75;
-    b = 0;
-    c = 50;
-    d = 25;
-  } else if (count % 3 == 2) {
-    // Triangle
-    a = 50;
-    b = 0;
-    c = 0;
-    d = 50;
   }
-
-  count++;
 
   glutPostRedisplay();
 }
