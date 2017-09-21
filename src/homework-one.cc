@@ -1,5 +1,6 @@
 #include "homework-one.h"
 
+#include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -59,6 +60,11 @@ void GetKey(unsigned char key, int x, int y) {
   } else if (key == 'r') {
     if (balls.size() > 1)
       balls.pop_back();
+  } else if (key == 'n') {
+    // Reset
+  } else if (key == 'q') {
+    glutDestroyWindow(window_id);
+    exit(0);
   }
 }
 
@@ -73,7 +79,14 @@ void Idle() {
   glutPostRedisplay();
 }
 
-void Setup() {
+int main(int argc, char* argv[]) {
+  glutInit(&argc, argv);
+
+  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+  glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+  glutInitWindowPosition(POSITION_X, POSITION_Y);
+  window_id = glutCreateWindow("Homework 1");
+
   Ball blue_ball(10.0f, 10.0f);
   Ball red_ball(100.0f, 100.0f);
 
@@ -87,12 +100,10 @@ void Setup() {
   glutIdleFunc(Idle);
   glutKeyboardFunc(GetKey);
 
-  DefaultSetup();
-}
+  glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+  gluOrtho2D(0.0, SCREEN_WIDTH, 0.0, SCREEN_HEIGHT);
 
-int main(int argc, char* argv[]) {
-  glutInit(&argc, argv);
-  CreateWindow("Homework 1", Setup);
+  glutMainLoop();
 
   return 0;
 }

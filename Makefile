@@ -10,7 +10,7 @@ OBJECTS := $(SOURCES:$(SRCDIR)/%.cc=$(BLDDIR)/%.o)
 
 all: $(BLDDIR) lab-one lab-two lab-three lab-four lab-five homework-one
 
-homework-one: $(addprefix $(BLDDIR)/, homework-one.o opengl-window.o)
+homework-one: $(BLDDIR)/homework-one.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 lab-one: $(addprefix $(BLDDIR)/, lab-one.o opengl-window.o)
