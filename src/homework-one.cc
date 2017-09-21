@@ -1,5 +1,6 @@
 #include "homework-one.h"
 
+#include <time.h>
 #include <unistd.h>
 
 void Ball::Draw() {
@@ -26,30 +27,62 @@ void Ball::SetColor(float red, float green, float blue) {
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT);
 
-  blue_ball.Draw();
-  red_ball.Draw();
+  for (Ball ball : balls)
+    ball.Draw();
 
   glFlush();
+}
+
+void GetKey(unsigned char key, int x, int y) {
+  if (key == 'a') {
+    if (balls.size() < 5) {
+      static unsigned int milliseconds = time(nullptr);
+
+      srand(milliseconds++);
+
+      float x = rand() % SCREEN_WIDTH;
+      float y = SCREEN_HEIGHT - (rand() % SCREEN_HEIGHT);
+
+      float dx = (rand() % 10) - 5;
+      float dy = (rand() % 10) - 5;
+
+      float red = (float) rand() / RAND_MAX;
+      float green = (float) rand() / RAND_MAX;
+      float blue = (float) rand() / RAND_MAX;
+
+      Ball ball(x, y);
+      ball.SetColor(red, green, blue);
+      ball.dx = dx;
+      ball.dy = dy;
+      balls.push_back(ball);
+    }
+  }
 }
 
 void Idle() {
   usleep(10000);
 
-  blue_ball.x += blue_ball.dx;
-  blue_ball.y += blue_ball.dy;
-
-  red_ball.x += red_ball.dx;
-  red_ball.y += red_ball.dy;
+  for (Ball& ball : balls) {
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+  }
 
   glutPostRedisplay();
 }
 
 void Setup() {
+  Ball blue_ball(10.0f, 10.0f);
+  Ball red_ball(100.0f, 100.0f);
+
   blue_ball.SetColor(0.0f, 0.0f, 1.0f);
   red_ball.SetColor(1.0f, 0.0f, 0.0f);
 
+  balls.push_back(blue_ball);
+  balls.push_back(red_ball);
+
   glutDisplayFunc(Display);
   glutIdleFunc(Idle);
+  glutKeyboardFunc(GetKey);
 
   DefaultSetup();
 }

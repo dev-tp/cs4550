@@ -3,6 +3,8 @@
 
 #include <math.h>
 
+#include <vector>
+
 #include "opengl-window.h"
 
 #define CIRCUMFERENCE M_PI * 2
@@ -28,7 +30,6 @@ public:
   void SetColor(float red, float green, float blue);
 };
 
-Ball blue_ball(10.0f, 10.0f);
-Ball red_ball(100.0f, 100.0f);
+std::vector<Ball> balls;
 
 #endif  // CS4550_HOMEWORK_ONE_H_
