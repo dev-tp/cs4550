@@ -61,7 +61,7 @@ void GetKey(unsigned char key, int x, int y) {
     if (balls.size() > 1)
       balls.pop_back();
   } else if (key == 'n') {
-    // Reset
+    InitialState();
   } else if (key == 'q') {
     glutDestroyWindow(window_id);
     exit(0);
@@ -79,13 +79,8 @@ void Idle() {
   glutPostRedisplay();
 }
 
-int main(int argc, char* argv[]) {
-  glutInit(&argc, argv);
-
-  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-  glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-  glutInitWindowPosition(POSITION_X, POSITION_Y);
-  window_id = glutCreateWindow("Homework 1");
+void InitialState() {
+  balls.clear();
 
   Ball blue_ball(10.0f, 10.0f);
   Ball red_ball(100.0f, 100.0f);
@@ -95,6 +90,17 @@ int main(int argc, char* argv[]) {
 
   balls.push_back(blue_ball);
   balls.push_back(red_ball);
+}
+
+int main(int argc, char* argv[]) {
+  glutInit(&argc, argv);
+
+  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+  glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+  glutInitWindowPosition(POSITION_X, POSITION_Y);
+  window_id = glutCreateWindow("Homework 1");
+
+  InitialState();
 
   glutDisplayFunc(Display);
   glutIdleFunc(Idle);

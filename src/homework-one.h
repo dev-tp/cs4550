@@ -39,4 +39,6 @@ public:
 static int window_id;
 std::vector<Ball> balls;
 
+void InitialState();
+
 #endif  // CS4550_HOMEWORK_ONE_H_
