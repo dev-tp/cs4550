@@ -56,6 +56,9 @@ void GetKey(unsigned char key, int x, int y) {
       ball.dy = dy;
       balls.push_back(ball);
     }
+  } else if (key == 'r') {
+    if (balls.size() > 1)
+      balls.pop_back();
   }
 }
 
