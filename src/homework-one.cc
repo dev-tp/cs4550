@@ -4,6 +4,17 @@
 #include <time.h>
 #include <unistd.h>
 
+void Ball::CheckForCollision() {
+  if (x >= SCREEN_WIDTH)
+    dx = -dx;
+  else if (x <= 0.0f)
+    dx = abs(dx);
+  else if (y >= SCREEN_HEIGHT)
+    dy = -dy;
+  else if (y <= 0.0f)
+    dy = abs(dy);
+}
+
 void Ball::Draw() {
   glBegin(GL_POLYGON);
 
@@ -74,6 +85,8 @@ void Idle() {
   for (Ball& ball : balls) {
     ball.x += ball.dx;
     ball.y += ball.dy;
+
+    ball.CheckForCollision();
   }
 
   glutPostRedisplay();

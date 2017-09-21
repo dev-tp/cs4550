@@ -32,6 +32,7 @@ public:
   }
   ~Ball() {}
 
+  void CheckForCollision();
   void Draw();
   void SetColor(float red, float green, float blue);
 };
