@@ -4,7 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 
-void Ball::CheckForCollision() {
+void Ball::CheckForCollision(int position) {
   if (x >= SCREEN_WIDTH)
     dx = -dx;
   else if (x <= 0.0f)
@@ -13,6 +13,21 @@ void Ball::CheckForCollision() {
     dy = -dy;
   else if (y <= 0.0f)
     dy = abs(dy);
+
+  for (int i = 0; i < (signed int) balls.size(); i++) {
+    if (i != position) {
+      float distance = sqrtf(powf(balls[i].x - x, 2.0f) +
+          powf(balls[i].y - y, 2.0f));
+
+      if (distance < balls[i].radius + radius) {
+        balls[i].dx = balls[i].dx < 0.0f ? abs(balls[i].dx) : -balls[i].dx;
+        dx = dx < 0.0f ? abs(dx) : -dx;
+
+        balls[i].dy = balls[i].dy < 0.0f ? abs(balls[i].dy) : -balls[i].dy;
+        dy = dy < 0.0f ? abs(dy) : -dy;
+      }
+    }
+  }
 }
 
 void Ball::Draw() {
@@ -82,11 +97,10 @@ void GetKey(unsigned char key, int x, int y) {
 void Idle() {
   usleep(10000);
 
-  for (Ball& ball : balls) {
-    ball.x += ball.dx;
-    ball.y += ball.dy;
-
-    ball.CheckForCollision();
+  for (int i = 0; i < (signed int) balls.size(); i++) {
+    balls[i].x += balls[i].dx;
+    balls[i].y += balls[i].dy;
+    balls[i].CheckForCollision(i);
   }
 
   glutPostRedisplay();
