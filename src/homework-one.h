@@ -16,6 +16,7 @@
 #define CIRCUMFERENCE M_PI * 2
 
 class Ball {
+  float mass;
   float red, green, blue;
 public:
   float x, y;
@@ -29,6 +30,8 @@ public:
 
     dx = 1.0f;
     dy = 1.0f;
+
+    mass = powf(radius, 3.0f);
   }
   ~Ball() {}
 

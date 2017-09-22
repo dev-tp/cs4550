@@ -20,11 +20,19 @@ void Ball::CheckForCollision(int position) {
           powf(balls[i].y - y, 2.0f));
 
       if (distance < balls[i].radius + radius) {
-        balls[i].dx = balls[i].dx < 0.0f ? abs(balls[i].dx) : -balls[i].dx;
-        dx = dx < 0.0f ? abs(dx) : -dx;
+        float norm_x = (balls[i].x - x) / distance;
+        float norm_y = (balls[i].y - y) / distance;
 
-        balls[i].dy = balls[i].dy < 0.0f ? abs(balls[i].dy) : -balls[i].dy;
-        dy = dy < 0.0f ? abs(dy) : -dy;
+        float combined_mass = mass + balls[i].mass;
+        float k_value = balls[i].dx * norm_x + balls[i].dy * norm_y;
+
+        k_value = 2 * ((dx * norm_x + dy * norm_y) - k_value) / combined_mass;
+
+        dx = dx - k_value * balls[i].mass * norm_x;
+        dy = dy - k_value * balls[i].mass * norm_y;
+
+        balls[i].dx = balls[i].dx + k_value * mass * norm_x;
+        balls[i].dy = balls[i].dy + k_value * mass * norm_y;
       }
     }
   }
