@@ -5,17 +5,16 @@
 #include <unistd.h>
 
 void Ball::CheckForCollision(int position) {
-  if (x >= SCREEN_WIDTH)
+  if (x >= SCREEN_WIDTH) {
     dx = -dx;
-  else if (x <= 0.0f)
+  } else if (x <= 0.0f) {
     dx = abs(dx);
-  else if (y >= SCREEN_HEIGHT)
+  } else if (y >= SCREEN_HEIGHT) {
     dy = -dy;
-  else if (y <= 0.0f)
+  } else if (y <= 0.0f) {
     dy = abs(dy);
-
-  for (int i = 0; i < (signed int) balls.size(); i++) {
-    if (i != position) {
+  } else {
+    for (int i = position + 1; i < (signed int) balls.size(); i++) {
       float distance = sqrtf(powf(balls[i].x - x, 2.0f) +
           powf(balls[i].y - y, 2.0f));
 
