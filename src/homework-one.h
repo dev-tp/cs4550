@@ -43,6 +43,7 @@ public:
 
 static int window_id;
 
+bool slowdown;
 float starting_dx, starting_dy;
 float starting_x, starting_y;
 int ball = -1;

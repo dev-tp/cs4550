@@ -71,31 +71,28 @@ float Distance(float x0, float y0, float x1, float y1) {
 }
 
 void GetKey(unsigned char key, int x, int y) {
-  if (key == 'a') {
-    if (balls.size() < 5) {
-      static unsigned int milliseconds = time(nullptr);
+  if (key == 'a' && balls.size() < 5) {
+    static unsigned int milliseconds = time(nullptr);
 
-      srand(milliseconds++);
+    srand(milliseconds++);
 
-      float x = rand() % SCREEN_WIDTH;
-      float y = SCREEN_HEIGHT - (rand() % SCREEN_HEIGHT);
+    float x = rand() % SCREEN_WIDTH;
+    float y = SCREEN_HEIGHT - (rand() % SCREEN_HEIGHT);
 
-      float dx = (rand() % 10) - 5;
-      float dy = (rand() % 10) - 5;
+    float dx = (rand() % 10) - 5;
+    float dy = (rand() % 10) - 5;
 
-      float red = (float) rand() / RAND_MAX;
-      float green = (float) rand() / RAND_MAX;
-      float blue = (float) rand() / RAND_MAX;
+    float red = (float) rand() / RAND_MAX;
+    float green = (float) rand() / RAND_MAX;
+    float blue = (float) rand() / RAND_MAX;
 
-      Ball ball(x, y);
-      ball.SetColor(red, green, blue);
-      ball.dx = dx;
-      ball.dy = dy;
-      balls.push_back(ball);
-    }
-  } else if (key == 'r') {
-    if (balls.size() > 1)
-      balls.pop_back();
+    Ball ball(x, y);
+    ball.SetColor(red, green, blue);
+    ball.dx = dx;
+    ball.dy = dy;
+    balls.push_back(ball);
+  } else if (key == 'r' && balls.size() > 1) {
+    balls.pop_back();
   } else if (key == 'n') {
     InitialState();
   } else if (key == 'q') {
@@ -105,7 +102,7 @@ void GetKey(unsigned char key, int x, int y) {
 }
 
 void Idle() {
-  usleep(10000);
+  usleep(slowdown ? 50000 : 10000);
 
   for (int i = 0; i < (int) balls.size(); i++) {
     balls[i].x += balls[i].dx;
@@ -160,6 +157,8 @@ void RegisterMouse(int button, int state, int x, int y) {
 
       ball = -1;
     }
+  } else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+    slowdown = !slowdown;
   }
 }
 
