@@ -14,7 +14,7 @@ void Ball::CheckForCollision(int position) {
   } else if (y <= 0.0f) {
     dy = abs(dy);
   } else if (!floating) {
-    for (int i = position + 1; i < (int) balls.size(); i++) {
+    for (int i = 0; i < (int) balls.size() && position != i; i++) {
       float distance = Distance(x, y, balls[i].x, balls[i].y);
 
       if ((distance < balls[i].radius + radius) && !balls[i].floating) {
@@ -107,7 +107,7 @@ void GetKey(unsigned char key, int x, int y) {
 void Idle() {
   usleep(10000);
 
-  for (int i = 0; i < (signed int) balls.size(); i++) {
+  for (int i = 0; i < (int) balls.size(); i++) {
     balls[i].x += balls[i].dx;
     balls[i].y += balls[i].dy;
     balls[i].CheckForCollision(i);
