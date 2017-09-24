@@ -42,6 +42,10 @@ public:
 };
 
 static int window_id;
+
+float starting_dx, starting_dy;
+float starting_x, starting_y;
+int ball = -1;
 std::vector<Ball> balls;
 
 float Distance(float x0, float y0, float x1, float y1);

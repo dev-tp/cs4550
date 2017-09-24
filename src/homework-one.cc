@@ -130,7 +130,6 @@ void InitialState() {
 }
 
 void RegisterMouse(int button, int state, int x, int y) {
-  static int ball = -1;
   static float dx, dy;
 
   y = SCREEN_HEIGHT - y;
@@ -139,8 +138,11 @@ void RegisterMouse(int button, int state, int x, int y) {
     if (state == GLUT_DOWN && ball == -1) {
       for (int i = 0; i < (int) balls.size(); i++) {
         if (Distance(balls[i].x, balls[i].y, x, y) < balls[i].radius) {
-          dx = balls[i].dx;
-          dy = balls[i].dy;
+          starting_x = balls[i].x;
+          starting_y = balls[i].y;
+
+          starting_dx = dx = balls[i].dx;
+          starting_dy = dy = balls[i].dy;
 
           balls[i].dx = 0.0f;
           balls[i].dy = 0.0f;
@@ -151,15 +153,25 @@ void RegisterMouse(int button, int state, int x, int y) {
           return;
         }
       }
-    } else if (state == GLUT_UP) {
-      if (ball != -1) {
-        balls[ball].dx = dx;
-        balls[ball].dy = dy;
-        balls[ball].floating = false;
+    } else if (state == GLUT_UP && ball != -1) {
+      balls[ball].dx = starting_dx != dx ? starting_dx : dx;
+      balls[ball].dy = starting_dy != dy ? starting_dy : dy;
+      balls[ball].floating = false;
 
-        ball = -1;
-      }
+      ball = -1;
     }
+  }
+}
+
+void RegisterMouseMovement(int x, int y) {
+  if (ball != -1) {
+    y = SCREEN_HEIGHT - y;
+
+    balls[ball].x = x;
+    balls[ball].y = y;
+
+    starting_dx = (starting_x - balls[ball].x) / 50.0f;
+    starting_dy = (starting_y - balls[ball].y) / 50.0f;
   }
 }
 
@@ -177,6 +189,7 @@ int main(int argc, char* argv[]) {
   glutIdleFunc(Idle);
   glutKeyboardFunc(GetKey);
   glutMouseFunc(RegisterMouse);
+  glutMotionFunc(RegisterMouseMovement);
 
   glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
   gluOrtho2D(0.0, SCREEN_WIDTH, 0.0, SCREEN_HEIGHT);
