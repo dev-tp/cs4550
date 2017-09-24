@@ -36,6 +36,7 @@ public:
   ~Ball() {}
 
   void CheckForCollision(int position);
+  void Drag(float x, float y);
   void Draw();
   void SetColor(float red, float green, float blue);
 };
@@ -43,6 +44,7 @@ public:
 static int window_id;
 std::vector<Ball> balls;
 
+float Distance(float x0, float y0, float x1, float y1);
 void InitialState();
 
 #endif  // CS4550_HOMEWORK_ONE_H_

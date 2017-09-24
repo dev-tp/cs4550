@@ -15,8 +15,7 @@ void Ball::CheckForCollision(int position) {
     dy = abs(dy);
   } else {
     for (int i = position + 1; i < (signed int) balls.size(); i++) {
-      float distance = sqrtf(powf(balls[i].x - x, 2.0f) +
-          powf(balls[i].y - y, 2.0f));
+      float distance = Distance(x, y, balls[i].x, balls[i].y);
 
       if (distance < balls[i].radius + radius) {
         float norm_x = (balls[i].x - x) / distance;
@@ -34,6 +33,13 @@ void Ball::CheckForCollision(int position) {
         balls[i].dy = balls[i].dy + k_value * mass * norm_y;
       }
     }
+  }
+}
+
+void Ball::Drag(float x, float y) {
+  if (Distance(this->x, this->y, x, y) < radius) {
+    dx = 0.0f;
+    dy = 0.0f;
   }
 }
 
@@ -65,6 +71,10 @@ void Display() {
     ball.Draw();
 
   glFlush();
+}
+
+float Distance(float x0, float y0, float x1, float y1) {
+  return sqrtf(powf(x1 - x0, 2.0f) + powf(y1 - y0, 2.0f));
 }
 
 void GetKey(unsigned char key, int x, int y) {
@@ -126,6 +136,15 @@ void InitialState() {
   balls.push_back(red_ball);
 }
 
+void RegisterMouse(int button, int state, int x, int y) {
+  if (button == GLUT_LEFT_BUTTON) {
+    if (state == GLUT_DOWN) {
+      for (Ball& ball : balls)
+        ball.Drag(x, SCREEN_HEIGHT - y);
+    }
+  }
+}
+
 int main(int argc, char* argv[]) {
   glutInit(&argc, argv);
 
@@ -139,6 +158,7 @@ int main(int argc, char* argv[]) {
   glutDisplayFunc(Display);
   glutIdleFunc(Idle);
   glutKeyboardFunc(GetKey);
+  glutMouseFunc(RegisterMouse);
 
   glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
   gluOrtho2D(0.0, SCREEN_WIDTH, 0.0, SCREEN_HEIGHT);
