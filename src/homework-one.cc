@@ -13,11 +13,11 @@ void Ball::CheckForCollision(int position) {
     dy = -dy;
   } else if (y <= 0.0f) {
     dy = abs(dy);
-  } else {
-    for (int i = position + 1; i < (signed int) balls.size(); i++) {
+  } else if (!floating) {
+    for (int i = position + 1; i < (int) balls.size(); i++) {
       float distance = Distance(x, y, balls[i].x, balls[i].y);
 
-      if (distance < balls[i].radius + radius) {
+      if ((distance < balls[i].radius + radius) && !balls[i].floating) {
         float norm_x = (balls[i].x - x) / distance;
         float norm_y = (balls[i].y - y) / distance;
 
@@ -33,13 +33,6 @@ void Ball::CheckForCollision(int position) {
         balls[i].dy = balls[i].dy + k_value * mass * norm_y;
       }
     }
-  }
-}
-
-void Ball::Drag(float x, float y) {
-  if (Distance(this->x, this->y, x, y) < radius) {
-    dx = 0.0f;
-    dy = 0.0f;
   }
 }
 
@@ -137,10 +130,35 @@ void InitialState() {
 }
 
 void RegisterMouse(int button, int state, int x, int y) {
+  static int ball = -1;
+  static float dx, dy;
+
+  y = SCREEN_HEIGHT - y;
+
   if (button == GLUT_LEFT_BUTTON) {
-    if (state == GLUT_DOWN) {
-      for (Ball& ball : balls)
-        ball.Drag(x, SCREEN_HEIGHT - y);
+    if (state == GLUT_DOWN && ball == -1) {
+      for (int i = 0; i < (int) balls.size(); i++) {
+        if (Distance(balls[i].x, balls[i].y, x, y) < balls[i].radius) {
+          dx = balls[i].dx;
+          dy = balls[i].dy;
+
+          balls[i].dx = 0.0f;
+          balls[i].dy = 0.0f;
+          balls[i].floating = true;
+
+          ball = i;
+
+          return;
+        }
+      }
+    } else if (state == GLUT_UP) {
+      if (ball != -1) {
+        balls[ball].dx = dx;
+        balls[ball].dy = dy;
+        balls[ball].floating = false;
+
+        ball = -1;
+      }
     }
   }
 }

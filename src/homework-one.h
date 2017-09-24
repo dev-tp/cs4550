@@ -19,6 +19,7 @@ class Ball {
   float mass;
   float red, green, blue;
 public:
+  bool floating;
   float x, y;
   float dx, dy;
   float radius;
@@ -36,7 +37,6 @@ public:
   ~Ball() {}
 
   void CheckForCollision(int position);
-  void Drag(float x, float y);
   void Draw();
   void SetColor(float red, float green, float blue);
 };
