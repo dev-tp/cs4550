@@ -29,6 +29,7 @@ void Display() {
   gluLookAt(10.0, 10.0, 15.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
   glScalef(scale, scale, scale);
+  glTranslatef(tx, ty, tz);
 
   DrawOctahedron();
 
@@ -66,16 +67,18 @@ void RegisterKey(unsigned char key, int x, int y) {
 
 void RegisterSpecialKey(int key, int x, int y) {
   if (key == GLUT_KEY_UP) {
-    // Move up
+    ty += 1.0f;
   } else if (key == GLUT_KEY_DOWN) {
-    // Move down
+    ty -= 1.0f;
   } else if (key == GLUT_KEY_LEFT) {
-    // Move left
+    tx -= 1.0f;
   } else if (key == GLUT_KEY_RIGHT) {
-    // Move right
+    tx += 1.0f;
   } else if (key == GLUT_KEY_HOME) {
     // Reset
   }
+
+  glutPostRedisplay();
 }
 
 int main(int argc, char* argv[]) {
