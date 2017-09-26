@@ -28,6 +28,7 @@ void Display() {
 
   gluLookAt(10.0, 10.0, 15.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
+  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
   glScalef(scale, scale, scale);
   glTranslatef(tx, ty, tz);
 
@@ -59,7 +60,7 @@ void RegisterKey(unsigned char key, int x, int y) {
   } else if (key == '-') {
     scale -= scale > 1.0f ? 1.0f : 0.0f;
   } else if (key == 'r') {
-    // Rotate
+    rotation_angle += 36.0f;
   }
 
   glutPostRedisplay();
