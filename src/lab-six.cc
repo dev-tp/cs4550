@@ -1,14 +1,9 @@
 #include "lab-six.h"
 
 void DrawOctahedron() {
-  DrawTriangle(4, 0, 1);
-  DrawTriangle(4, 1, 2);
-  DrawTriangle(4, 2, 3);
-  DrawTriangle(4, 3, 0);
-  DrawTriangle(5, 0, 1);
-  DrawTriangle(5, 1, 2);
-  DrawTriangle(5, 2, 3);
-  DrawTriangle(5, 3, 0);
+  for (int i = 4; i < 6; i++)
+    for (int j = 0; j < 4; j++)
+      DrawTriangle(i, j, (j + 1) % 4);
 }
 
 void DrawTriangle(int a, int b, int c) {
@@ -47,21 +42,18 @@ void GenerateOctahedron() {
     { 0.0f, -1.5f,  0.0f}
   };
 
-  for (int i = 0; i < 8; i++) {
-    octahedron[i].vertices[0] = vertices[i][0];
-    octahedron[i].vertices[1] = vertices[i][1];
-    octahedron[i].vertices[2] = vertices[i][2];
-  }
+  for (int i = 0; i < 8; i++)
+    for (int j = 0; j < 3; j++)
+      octahedron[i].vertices[j] = vertices[i][j];
 }
 
 void RegisterKey(unsigned char key, int x, int y) {
-  if (key == '+') {
+  if (key == '+')
     scale += 1.0f;
-  } else if (key == '-') {
+  else if (key == '-')
     scale -= scale > 1.0f ? 1.0f : 0.0f;
-  } else if (key == 'r') {
+  else if (key == 'r')
     rotation_angle += 36.0f;
-  }
 
   glutPostRedisplay();
 }
@@ -76,7 +68,9 @@ void RegisterSpecialKey(int key, int x, int y) {
   } else if (key == GLUT_KEY_RIGHT) {
     tx += 1.0f;
   } else if (key == GLUT_KEY_HOME) {
-    // Reset
+    rotation_angle = 0.0f;
+    scale = 1.0f;
+    tx = ty = tz = 0.0f;
   }
 
   glutPostRedisplay();
