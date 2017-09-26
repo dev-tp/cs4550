@@ -28,7 +28,7 @@ void Display() {
 
   gluLookAt(10.0, 10.0, 15.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-  // Transformations go here
+  glScalef(scale, scale, scale);
 
   DrawOctahedron();
 
@@ -52,6 +52,32 @@ void GenerateOctahedron() {
   }
 }
 
+void RegisterKey(unsigned char key, int x, int y) {
+  if (key == '+') {
+    scale += 1.0f;
+  } else if (key == '-') {
+    scale -= scale > 1.0f ? 1.0f : 0.0f;
+  } else if (key == 'r') {
+    // Rotate
+  }
+
+  glutPostRedisplay();
+}
+
+void RegisterSpecialKey(int key, int x, int y) {
+  if (key == GLUT_KEY_UP) {
+    // Move up
+  } else if (key == GLUT_KEY_DOWN) {
+    // Move down
+  } else if (key == GLUT_KEY_LEFT) {
+    // Move left
+  } else if (key == GLUT_KEY_RIGHT) {
+    // Move right
+  } else if (key == GLUT_KEY_HOME) {
+    // Reset
+  }
+}
+
 int main(int argc, char* argv[]) {
   glutInit(&argc, argv);
 
@@ -61,6 +87,8 @@ int main(int argc, char* argv[]) {
   glutCreateWindow("Lab 6");
 
   glutDisplayFunc(Display);
+  glutKeyboardFunc(RegisterKey);
+  glutSpecialFunc(RegisterSpecialKey);
 
   glClearColor(1.0, 1.0, 1.0, 0.0);
   glColor3f(0.0f, 0.0f, 0.0f);
