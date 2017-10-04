@@ -13,6 +13,8 @@ double camera_x = 25.0;
 double camera_y = 25.0;
 double camera_z = 25.0;
 
+float rotation_angle = 0.0f;
+
 double view_x = 0.0;
 double view_y = 0.0;
 double view_z = 0.0;

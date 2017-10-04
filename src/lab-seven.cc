@@ -1,5 +1,7 @@
 #include "lab-seven.h"
 
+#include <unistd.h>
+
 #include <iostream>
 
 void Display() {
@@ -28,12 +30,16 @@ void Display() {
   glEnd();
 
   // The sun
+  glPushMatrix();
   glColor3f(1.0f, 0.8413f, 0.0f);
+  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
   glutSolidSphere(0.5, 20, 16);
+  glPopMatrix();
 
   // Planet Earth
   glColor3f(0.0f, 0.0f, 1.0f);
   glPushMatrix();
+  glRotatef(rotation_angle, 0.0f, 1.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 2.0f);
   glutSolidSphere(0.2, 20, 8);
   glPopMatrix();
@@ -41,7 +47,9 @@ void Display() {
   // Earth's moon
   glColor3f(0.5f, 0.5f, 0.5f);
   glPushMatrix();
+  glRotatef(rotation_angle, 0.0f, 1.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 2.0f);
+  glRotatef(rotation_angle * 2.5f, 0.0f, -1.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 0.3f);
   glutSolidSphere(0.05, 10, 4);
   glPopMatrix();
@@ -49,11 +57,18 @@ void Display() {
   // Planet Mars
   glColor3f(1.0f, 0.0f, 0.0f);
   glPushMatrix();
+  glRotatef(rotation_angle / 2.0f, 0.0f, 1.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 3.0f);
   glutSolidSphere(0.15, 20, 8);
   glPopMatrix();
 
   glutSwapBuffers();
+}
+
+void Idle() {
+  usleep(100000);
+  rotation_angle += 10.0f;
+  glutPostRedisplay();
 }
 
 void Initialize() {
@@ -141,6 +156,7 @@ int main(int argc, char* argv[]) {
   Initialize();
 
   glutDisplayFunc(Display);
+  glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKey);
 
   glutMainLoop();
