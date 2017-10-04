@@ -30,6 +30,18 @@ void Display() {
 
   glEnd();
 
+  glBegin(GL_LINE_LOOP);
+
+  // Earth's orbital path
+  for (float theta = 0.0f; theta < 1.0f; theta += 0.01f) {
+    float x = 2.0f * cos(2 * M_PI * theta);
+    float z = 2.0f * sin(2 * M_PI * theta);
+
+    glVertex3f(x, 0.0f, z);
+  }
+
+  glEnd();
+
   // The sun
   glPushMatrix();
   glColor3f(1.0f, 0.8413f, 0.0f);
