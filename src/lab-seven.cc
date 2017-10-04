@@ -66,8 +66,11 @@ void Display() {
 }
 
 void Idle() {
-  usleep(100000);
-  rotation_angle += 10.0f;
+  if (!camera_rotating) {
+    usleep(100000);
+    rotation_angle += 10.0f;
+  }
+
   glutPostRedisplay();
 }
 
@@ -123,7 +126,7 @@ void RegisterKey(unsigned char key, int x, int y) {
   static int step;
 
   if (key == 'r') {
-    // Toggle between starting and stopping camera rotation animation
+    camera_rotating = !camera_rotating;
   } else if (key == 'v') {
     if (step % 3 == 0) {
       camera_x = 25.0;
@@ -140,9 +143,9 @@ void RegisterKey(unsigned char key, int x, int y) {
     }
 
     step++;
-  }
 
-  glutPostRedisplay();
+    glutPostRedisplay();
+  }
 }
 
 int main(int argc, char* argv[]) {

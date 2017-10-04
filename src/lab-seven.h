@@ -9,6 +9,8 @@
 #define POSITION_X (glutGet(GLUT_SCREEN_WIDTH) - SCREEN_WIDTH) / 2
 #define POSITION_Y (glutGet(GLUT_SCREEN_HEIGHT) - SCREEN_HEIGHT) / 2
 
+bool camera_rotating;
+
 double camera_x = 25.0;
 double camera_y = 25.0;
 double camera_z = 25.0;
