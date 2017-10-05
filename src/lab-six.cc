@@ -23,7 +23,7 @@ void Display() {
 
   gluLookAt(10.0, 10.0, 15.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
+  glRotatef(rotation_angle, 0.0f, 1.0f, 0.0f);
   glScalef(scale, scale, scale);
   glTranslatef(tx, ty, tz);
 
