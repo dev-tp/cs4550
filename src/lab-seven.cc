@@ -86,8 +86,7 @@ void Idle() {
     static double theta = 0.0;
     theta += 0.01f;
 
-    // TODO Rotate camera in elliptical path
-    camera_x = 20.0 * sin(theta);
+    camera_x = 65.0 * sin(theta);
     camera_z = 20.0 * cos(theta);
   }
 
