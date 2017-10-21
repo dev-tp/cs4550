@@ -9,6 +9,20 @@
 #define POSITION_X (glutGet(GLUT_SCREEN_WIDTH) - SCREEN_WIDTH) / 2
 #define POSITION_Y (glutGet(GLUT_SCREEN_HEIGHT) - SCREEN_HEIGHT) / 2
 
+#define DRAW_CUBE()   \
+  if (draw_solid)     \
+    glutSolidCube(1.0); \
+  else                \
+    glutWireCube(1.0);
+
+#define DRAW_SPHERE(radius)          \
+  if (draw_solid)                    \
+    glutSolidSphere(radius, 32, 16); \
+  else                               \
+    glutWireSphere(radius, 32, 16);
+
+bool draw_solid = true;
+
 int azimuth = 340;
 int elevation = 30;
 
