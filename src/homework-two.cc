@@ -37,6 +37,72 @@ void Display() {
 
   glEnd();
 
+  glColor3f(0.5f, 0.5f, 0.5f);
+  glTranslatef(0.0f, 1.5f, 0.0f);
+  glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
+
+  // Base cylinder
+  GLUquadric* quadratic = gluNewQuadric();
+
+  glPushMatrix();
+  glTranslatef(0.2f, 0.0f, -1.5f);
+  gluCylinder(quadratic, 0.8, 0.8, 0.5, 32, 16);
+  glPopMatrix();
+
+  float z_axis[] = {-1.0f, -1.5f};
+
+  // Add the cylinder's missing top and bottom surfaces
+  for (float z : z_axis) {
+    glBegin(GL_POLYGON);
+
+    for (float theta = 0.0f; theta < 1.0f; theta += 0.01f) {
+      float x = 0.8f * cos(2 * M_PI * theta);
+      float y = 0.8f * sin(2 * M_PI * theta);
+
+      glVertex3f(0.2f + x, y, z);
+    }
+
+    glEnd();
+  }
+
+  // Shoulder joint
+  glPushMatrix();
+  glTranslatef(0.2f, 0.0f, -1.0f);
+  glutSolidSphere(0.5, 32, 16);
+  glPopMatrix();
+
+  // Upper arm
+  glPushMatrix();
+  glScalef(0.2f, 0.2f, 2.0f);
+  glutSolidCube(1);
+  glPopMatrix();
+
+  // Upper arm
+  glPushMatrix();
+  glScalef(0.2f, 0.2f, 2.0f);
+  glTranslatef(2.0f, 0.0f, 0.0f);
+  glutSolidCube(1);
+  glPopMatrix();
+
+  // Arm joint
+  glPushMatrix();
+  glTranslatef(0.2f, 0.0f, 0.8f);
+  glutSolidSphere(0.4, 32, 16);
+  glPopMatrix();
+
+  // Lower arm
+  glPushMatrix();
+  glScalef(0.2f, 0.2f, 2.0f);
+  glTranslatef(1.0f, 0.0f, 0.8f);
+  glutSolidCube(1);
+  glPopMatrix();
+
+  // Hand joint
+  glPushMatrix();
+  glTranslatef(0.2f, 0.0f, 2.8f);
+  glutSolidSphere(0.3, 32, 16);
+  glPopMatrix();
+
   glutSwapBuffers();
 }
 
