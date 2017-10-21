@@ -18,24 +18,26 @@ void Display() {
   gluLookAt(camera_x, camera_y, camera_z, 0.0, 0.0, 0.0, 0.0,
             cos(M_PI / 180.0 * elevation), 0.0);
 
-  glBegin(GL_LINES);
+  if (display_coordinate_system) {
+    glBegin(GL_LINES);
 
-  // x-axis line
-  glColor3f(1.0f, 0.0f, 0.0f);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(100.0f, 0.0f, 0.0f);
+    // x-axis line
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(100.0f, 0.0f, 0.0f);
 
-  // y-axis line
-  glColor3f(0.0f, 1.0f, 0.0f);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(0.0f, 100.0f, 0.0f);
+    // y-axis line
+    glColor3f(0.0f, 1.0f, 0.0f);
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 100.0f, 0.0f);
 
-  // z-axis line
-  glColor3f(0.0f, 0.0f, 1.0f);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(0.0f, 0.0f, 100.0f);
+    // z-axis line
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 0.0f, 100.0f);
 
-  glEnd();
+    glEnd();
+  }
 
   glColor3f(0.5f, 0.5f, 0.5f);
   glTranslatef(0.0f, 1.5f, 0.0f);
@@ -144,7 +146,9 @@ void Initialize() {
 }
 
 void RegisterKey(unsigned char key, int x, int y) {
-  if (key == 'q')
+  if (key == 'c')
+    display_coordinate_system = !display_coordinate_system;
+  else if (key == 'q' || key == 'Q')
     exit(0);
   else if (key == 'u')
     draw_solid = !draw_solid;
