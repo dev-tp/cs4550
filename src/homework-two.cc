@@ -42,18 +42,24 @@ void Display() {
   glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
 
   // Base cylinder
-  GLUquadric* quadratic = gluNewQuadric();
+  if (draw_solid) {
+    glPushMatrix();
+    glTranslatef(0.2f, 0.0f, -1.5f);
 
-  glPushMatrix();
-  glTranslatef(0.2f, 0.0f, -1.5f);
-  gluCylinder(quadratic, 0.8, 0.8, 0.5, 32, 16);
-  glPopMatrix();
+    GLUquadric* quadric = gluNewQuadric();
+    // gluQuadricDrawStyle(quadric, GL_LINE);
+
+    gluCylinder(quadric, 0.8, 0.8, 0.5, 32, 16);
+    glPopMatrix();
+
+    gluDeleteQuadric(quadric);
+  }
 
   float z_axis[] = {-1.0f, -1.5f};
 
   // Add the cylinder's missing top and bottom surfaces
   for (float z : z_axis) {
-    glBegin(GL_POLYGON);
+    glBegin(draw_solid ? GL_POLYGON : GL_LINE_LOOP);
 
     for (float theta = 0.0f; theta < 1.0f; theta += 0.01f) {
       float x = 0.8f * cos(2 * M_PI * theta);
@@ -68,39 +74,39 @@ void Display() {
   // Shoulder joint
   glPushMatrix();
   glTranslatef(0.2f, 0.0f, -1.0f);
-  glutSolidSphere(0.5, 32, 16);
+  DRAW_SPHERE(0.5);
   glPopMatrix();
 
   // Upper arm
   glPushMatrix();
   glScalef(0.2f, 0.2f, 2.0f);
-  glutSolidCube(1);
+  DRAW_CUBE();
   glPopMatrix();
 
   // Upper arm
   glPushMatrix();
   glScalef(0.2f, 0.2f, 2.0f);
   glTranslatef(2.0f, 0.0f, 0.0f);
-  glutSolidCube(1);
+  DRAW_CUBE();
   glPopMatrix();
 
   // Arm joint
   glPushMatrix();
   glTranslatef(0.2f, 0.0f, 0.8f);
-  glutSolidSphere(0.4, 32, 16);
+  DRAW_SPHERE(0.4);
   glPopMatrix();
 
   // Lower arm
   glPushMatrix();
   glScalef(0.2f, 0.2f, 2.0f);
   glTranslatef(1.0f, 0.0f, 0.8f);
-  glutSolidCube(1);
+  DRAW_CUBE();
   glPopMatrix();
 
   // Hand joint
   glPushMatrix();
   glTranslatef(0.2f, 0.0f, 2.8f);
-  glutSolidSphere(0.3, 32, 16);
+  DRAW_SPHERE(0.3);
   glPopMatrix();
 
   glutSwapBuffers();
@@ -140,6 +146,10 @@ void Initialize() {
 void RegisterKey(unsigned char key, int x, int y) {
   if (key == 'q')
     exit(0);
+  else if (key == 'u')
+    draw_solid = !draw_solid;
+
+  glutPostRedisplay();
 }
 
 void RegisterSpecialKey(int key, int x, int y) {
