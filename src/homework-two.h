@@ -21,6 +21,7 @@
   else                               \
     glutWireSphere(radius, 32, 16);
 
+bool display_coordinate_system = true;
 bool draw_solid = true;
 
 int azimuth = 340;
