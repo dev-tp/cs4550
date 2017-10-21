@@ -1,13 +1,41 @@
 #include "homework-two.h"
 
+#include <math.h>
+
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  gluLookAt(camera_x, camera_y, camera_z, view_x, view_y, view_z, 0.0, 1.0, 0.0);
+  double dimension = 45.0;  // Dimension of the orthagonal box
 
-  // Add 3D vectors here
+  double camera_x = -2 * dimension * sin(M_PI / 180.0 * azimuth) *
+    cos(M_PI / 180.0 * elevation);
+  double camera_z = 2 * dimension * cos(M_PI / 180.0 * azimuth) *
+    cos(M_PI / 180.0 * elevation);
+  double camera_y = 2 * dimension * sin(M_PI / 180.0 * elevation);
+
+  gluLookAt(camera_x, camera_y, camera_z, 0.0, 0.0, 0.0, 0.0,
+            cos(M_PI / 180.0 * elevation), 0.0);
+
+  glBegin(GL_LINES);
+
+  // x-axis line
+  glColor3f(1.0f, 0.0f, 0.0f);
+  glVertex3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(100.0f, 0.0f, 0.0f);
+
+  // y-axis line
+  glColor3f(0.0f, 1.0f, 0.0f);
+  glVertex3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(0.0f, 100.0f, 0.0f);
+
+  // z-axis line
+  glColor3f(0.0f, 0.0f, 1.0f);
+  glVertex3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(0.0f, 0.0f, 100.0f);
+
+  glEnd();
 
   glutSwapBuffers();
 }
@@ -43,6 +71,27 @@ void Initialize() {
   glOrtho(-3.5, 3.5, -3.5, 3.5, 0.1, 100.0);
 }
 
+void RegisterKey(unsigned char key, int x, int y) {
+  if (key == 'q')
+    exit(0);
+}
+
+void RegisterSpecialKey(int key, int x, int y) {
+  if (key == GLUT_KEY_RIGHT)
+    azimuth -= 5;
+  else if (key == GLUT_KEY_LEFT)
+    azimuth += 5;
+  else if (key == GLUT_KEY_UP)
+    elevation += 5;
+  else if (key == GLUT_KEY_DOWN)
+    elevation -= 5;
+
+  azimuth %= 360;
+  elevation %= 360;
+
+  glutPostRedisplay();
+}
+
 int main(int argc, char* argv[]) {
   glutInit(&argc, argv);
 
@@ -54,6 +103,8 @@ int main(int argc, char* argv[]) {
   Initialize();
 
   glutDisplayFunc(Display);
+  glutKeyboardFunc(RegisterKey);
+  glutSpecialFunc(RegisterSpecialKey);
 
   glutMainLoop();
 

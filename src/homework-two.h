@@ -9,16 +9,7 @@
 #define POSITION_X (glutGet(GLUT_SCREEN_WIDTH) - SCREEN_WIDTH) / 2
 #define POSITION_Y (glutGet(GLUT_SCREEN_HEIGHT) - SCREEN_HEIGHT) / 2
 
-bool camera_rotating;
-
-double camera_x = 25.0;
-double camera_y = 25.0;
-double camera_z = 25.0;
-
-float rotation_angle = 0.0f;
-
-double view_x = 0.0;
-double view_y = 0.0;
-double view_z = 0.0;
+int azimuth = 340;
+int elevation = 30;
 
 #endif  // CS4550_HOMEWORK_TWO_H_
