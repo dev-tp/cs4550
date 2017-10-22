@@ -33,9 +33,7 @@ float rotation_angle = 0.0f;
 float upper_arm = -60.0f;
 float wrist = 10.0f;
 
-int azimuth = 340;
-int elevation = 30;
-
 void RenderFinger(float x, float y, float z);
+void Reset();
 
 #endif  // CS4550_HOMEWORK_TWO_H_

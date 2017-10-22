@@ -201,21 +201,6 @@ void Display() {
   glutSwapBuffers();
 }
 
-void RenderFinger(float x, float y, float z) {
-  glPushMatrix();
-  glScalef(0.1f, 0.1f, 0.4f);
-  DRAW_CUBE();
-  glPopMatrix();
-
-  glPushMatrix();
-  glScalef(0.1f, 0.1f, 0.3f);
-  glRotatef(finger, x, y, z);
-  glTranslatef(0.0f, 0.0f, 0.0f);
-  glTranslatef(0.0f, 0.0f, 1.0f);
-  DRAW_CUBE();
-  glPopMatrix();
-}
-
 void Initialize() {
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
@@ -248,7 +233,9 @@ void Initialize() {
 }
 
 void RegisterKey(unsigned char key, int x, int y) {
-  if (key == 'c')
+  if (key == 27)
+    Reset();
+  else if (key == 'c')
     display_coordinate_system = !display_coordinate_system;
   else if (key == 'i' && active)
     upper_arm += 10.0f;
@@ -290,6 +277,31 @@ void RegisterSpecialKey(int key, int x, int y) {
   }
 
   glutPostRedisplay();
+}
+
+void RenderFinger(float x, float y, float z) {
+  glPushMatrix();
+  glScalef(0.1f, 0.1f, 0.4f);
+  DRAW_CUBE();
+  glPopMatrix();
+
+  glPushMatrix();
+  glScalef(0.1f, 0.1f, 0.3f);
+  glRotatef(finger, x, y, z);
+  glTranslatef(0.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 1.0f);
+  DRAW_CUBE();
+  glPopMatrix();
+}
+
+void Reset() {
+  finger = 30.0f;
+  lower_arm = 140.0f;
+  position_x = 0.0f;
+  position_z = 0.0f;
+  rotation_angle = 0.0f;
+  upper_arm = -60.0f;
+  wrist = 10.0f;
 }
 
 int main(int argc, char* argv[]) {
