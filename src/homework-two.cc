@@ -44,14 +44,14 @@ void Display() {
 
   // Shoulder joint
   glPushMatrix();
-  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
   DRAW_SPHERE(0.5);
   glPopMatrix();
 
   // Upper arm
   glPushMatrix();
   glTranslatef(-0.2f, 0.0f, 0.0f);
-  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
   DRAW_CUBE();
@@ -60,7 +60,7 @@ void Display() {
   // Upper arm
   glPushMatrix();
   glTranslatef(0.2f, 0.0f, 0.0f);
-  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
   DRAW_CUBE();
@@ -68,7 +68,7 @@ void Display() {
 
   // Arm joint
   glPushMatrix();
-  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 1.8f);
   DRAW_SPHERE(0.4);
   glPopMatrix();
@@ -76,10 +76,10 @@ void Display() {
   // Lower arm
   glPushMatrix();
   glTranslatef(0.0f, 0.0f, 0.0f);
-  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 2.8f);
   glTranslatef(0.0f, 0.0f, -0.8f);
-  glRotatef(-rotation_angle, 1.0f, 0.0f, 0.0f);
+  glRotatef(lower_arm, 1.0f, 0.0f, 0.0f);
 
   // Hand joint
   glPushMatrix();
@@ -173,6 +173,14 @@ void Initialize() {
 void RegisterKey(unsigned char key, int x, int y) {
   if (key == 'c')
     display_coordinate_system = !display_coordinate_system;
+  else if (key == 'i')
+    upper_arm -= 10.0f;
+  else if (key == 'I')
+    upper_arm += 10.0f;
+  else if (key == 'j')
+    lower_arm += 10.0f;
+  else if (key == 'J')
+    lower_arm -= 10.0f;
   else if (key == 'q' || key == 'Q')
     exit(0);
   else if (key == 'u')
@@ -208,7 +216,7 @@ int main(int argc, char* argv[]) {
   Initialize();
 
   glutDisplayFunc(Display);
-  glutIdleFunc(Idle);
+  // glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKey);
   glutSpecialFunc(RegisterSpecialKey);
 

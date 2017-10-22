@@ -28,6 +28,9 @@ int azimuth = 340;
 int elevation = 30;
 float rotation_angle = 0.0f;
 
+float lower_arm = 100.0f;
+float upper_arm = -120.0f;
+
 void RenderFinger();
 
 #endif  // CS4550_HOMEWORK_TWO_H_
