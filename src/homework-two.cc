@@ -87,33 +87,33 @@ void Display() {
   glRotatef(wrist, 1.0f, 0.0f, 0.0f);
 
   glPushMatrix();
-  glTranslatef(-0.2f, 0.0f, 0.1f);
-  glRotatef(72.0f, 0.0f, -1.0f, 0.0f);
-  RenderFinger();
+  glTranslatef(-0.2f, 0.0f, 0.2f);
+  glRotatef(10.0f, 0.0f, -1.0f, 0.0f);
+  RenderFinger(0.0f, 1.0f, 0.0f);
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(-0.1f, 0.2f, 0.1f);
-  glRotatef(72.0f, 0.0f, -1.0f, -1.0f);
-  RenderFinger();
+  glTranslatef(-0.1f, 0.2f, 0.2f);
+  glRotatef(10.0f, 0.0f, -1.0f, -1.0f);
+  RenderFinger(0.0f, 1.0f, 0.0f);
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(0.1f, 0.2f, 0.1f);
-  glRotatef(72.0f, 0.0f, 1.0f, 1.0f);
-  RenderFinger();
+  glTranslatef(0.1f, 0.2f, 0.2f);
+  glRotatef(10.0f, 0.0f, 1.0f, 1.0f);
+  RenderFinger(0.0f, -1.0f, 0.0f);
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(0.2f, 0.0f, 0.1f);
-  glRotatef(72.0f, 0.0f, 1.0f, 0.0f);
-  RenderFinger();
+  glTranslatef(0.2f, 0.0f, 0.2f);
+  glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+  RenderFinger(0.0f, -1.0f, 0.0f);
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(0.0f, -0.2f, 0.1f);
-  glRotatef(72.0f, 1.0f, 0.0f, 0.0f);
-  RenderFinger();
+  glTranslatef(0.0f, -0.2f, 0.2f);
+  glRotatef(10.0f, 1.0f, 0.0f, 0.0f);
+  RenderFinger(-1.0f, 0.0f, 0.0f);
   glPopMatrix();
 
   DRAW_SPHERE(0.3);
@@ -127,16 +127,17 @@ void Display() {
   glutSwapBuffers();
 }
 
-void RenderFinger() {
+void RenderFinger(float x, float y, float z) {
   glPushMatrix();
-  glScalef(0.1f, 0.1f, 0.3f);
+  glScalef(0.1f, 0.1f, 0.4f);
   DRAW_CUBE();
   glPopMatrix();
 
   glPushMatrix();
-  glRotatef(rotation_angle, 0, 1, 0);
-  glScalef(0.1f, 0.1f, 0.2f);
-  glTranslatef(0.0f, 0.0f, 1.5f);
+  glScalef(0.1f, 0.1f, 0.3f);
+  glRotatef(finger, x, y, z);
+  glTranslatef(0.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 1.0f);
   DRAW_CUBE();
   glPopMatrix();
 }
@@ -189,6 +190,10 @@ void RegisterKey(unsigned char key, int x, int y) {
     lower_arm += 10.0f;
   else if (key == 'J')
     lower_arm -= 10.0f;
+  else if (key == 'm')
+    finger += 10.0f;
+  else if (key == 'M')
+    finger -= 10.0f;
   else if (key == 'n')
     wrist += 10.0f;
   else if (key == 'N')
@@ -228,7 +233,7 @@ int main(int argc, char* argv[]) {
   Initialize();
 
   glutDisplayFunc(Display);
-  glutIdleFunc(Idle);
+  // glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKey);
   glutSpecialFunc(RegisterSpecialKey);
 
