@@ -69,7 +69,7 @@ void Display() {
   // Arm joint
   glPushMatrix();
   glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
-  glTranslatef(0.0f, 0.0f, 1.8f);
+  glTranslatef(0.0f, 0.0f, 2.0f);
   DRAW_SPHERE(0.4);
   glPopMatrix();
 
@@ -87,31 +87,31 @@ void Display() {
   glRotatef(wrist, 1.0f, 0.0f, 0.0f);
 
   glPushMatrix();
-  glTranslatef(-0.2f, 0.0f, 0.0f);
+  glTranslatef(-0.2f, 0.0f, 0.1f);
   glRotatef(72.0f, 0.0f, -1.0f, 0.0f);
   RenderFinger();
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(-0.1f, 0.2f, 0.0f);
+  glTranslatef(-0.1f, 0.2f, 0.1f);
   glRotatef(72.0f, 0.0f, -1.0f, -1.0f);
   RenderFinger();
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(0.1f, 0.2f, 0.0f);
-  glRotatef(72.0f, 0.0f, 1, 1);
+  glTranslatef(0.1f, 0.2f, 0.1f);
+  glRotatef(72.0f, 0.0f, 1.0f, 1.0f);
   RenderFinger();
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(0.2f, 0.0f, 0.0f);
+  glTranslatef(0.2f, 0.0f, 0.1f);
   glRotatef(72.0f, 0.0f, 1.0f, 0.0f);
   RenderFinger();
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(0.0f, -0.2f, 0.0f);
+  glTranslatef(0.0f, -0.2f, 0.1f);
   glRotatef(72.0f, 1.0f, 0.0f, 0.0f);
   RenderFinger();
   glPopMatrix();
@@ -134,6 +134,7 @@ void RenderFinger() {
   glPopMatrix();
 
   glPushMatrix();
+  glRotatef(rotation_angle, 0, 1, 0);
   glScalef(0.1f, 0.1f, 0.2f);
   glTranslatef(0.0f, 0.0f, 1.5f);
   DRAW_CUBE();
@@ -227,7 +228,7 @@ int main(int argc, char* argv[]) {
   Initialize();
 
   glutDisplayFunc(Display);
-  // glutIdleFunc(Idle);
+  glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKey);
   glutSpecialFunc(RegisterSpecialKey);
 
