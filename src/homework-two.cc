@@ -37,7 +37,7 @@ void Display() {
   // Floor
   glPushMatrix();
   glTranslatef(0.0f, 0.0f, 0.0f);
-  glScalef(wall_height, 0.1f, wall_height);
+  glScalef(wall_height, 0.0f, wall_height);
   DRAW_CUBE();
   glPopMatrix();
 
