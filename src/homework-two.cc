@@ -84,32 +84,39 @@ void Display() {
   // Hand joint
   glPushMatrix();
   glTranslatef(0.0f, 0.0f, 1.8f);
+  glRotatef(wrist, 1.0f, 0.0f, 0.0f);
+
+  glPushMatrix();
+  glTranslatef(-0.2f, 0.0f, 0.0f);
+  glRotatef(72.0f, 0.0f, -1.0f, 0.0f);
+  RenderFinger();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslatef(-0.1f, 0.2f, 0.0f);
+  glRotatef(72.0f, 0.0f, -1.0f, -1.0f);
+  RenderFinger();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslatef(0.1f, 0.2f, 0.0f);
+  glRotatef(72.0f, 0.0f, 1, 1);
+  RenderFinger();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslatef(0.2f, 0.0f, 0.0f);
+  glRotatef(72.0f, 0.0f, 1.0f, 0.0f);
+  RenderFinger();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslatef(0.0f, -0.2f, 0.0f);
+  glRotatef(72.0f, 1.0f, 0.0f, 0.0f);
+  RenderFinger();
+  glPopMatrix();
+
   DRAW_SPHERE(0.3);
-  glPopMatrix();
-
-  glPushMatrix();
-  glTranslatef(-0.2f, 0.0f, 2.2f);
-  RenderFinger();
-  glPopMatrix();
-
-  glPushMatrix();
-  glTranslatef(-0.1f, 0.2f, 2.2f);
-  RenderFinger();
-  glPopMatrix();
-
-  glPushMatrix();
-  glTranslatef(0.1f, 0.2f, 2.2f);
-  RenderFinger();
-  glPopMatrix();
-
-  glPushMatrix();
-  glTranslatef(0.2f, 0.0f, 2.2f);
-  RenderFinger();
-  glPopMatrix();
-
-  glPushMatrix();
-  glTranslatef(0.0f, -0.2f, 2.2f);
-  RenderFinger();
   glPopMatrix();
 
   glTranslatef(0.0f, 0.0f, 1.0f);
@@ -181,6 +188,10 @@ void RegisterKey(unsigned char key, int x, int y) {
     lower_arm += 10.0f;
   else if (key == 'J')
     lower_arm -= 10.0f;
+  else if (key == 'n')
+    wrist += 10.0f;
+  else if (key == 'N')
+    wrist -= 10.0f;
   else if (key == 'q' || key == 'Q')
     exit(0);
   else if (key == 'u')
