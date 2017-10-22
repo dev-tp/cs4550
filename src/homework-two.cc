@@ -85,6 +85,17 @@ void Display() {
   DRAW_CUBE();
   glPopMatrix();
 
+  // Hand joint
+  glPushMatrix();
+  glTranslatef(0.0f, 0.0f, 0.0f);
+  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 2.8f);
+  glTranslatef(0.0f, 0.0f, -0.8f);
+  glRotatef(-rotation_angle, 1.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 1.8f);
+  DRAW_SPHERE(0.3);
+  glPopMatrix();
+
   glutSwapBuffers();
 }
 
