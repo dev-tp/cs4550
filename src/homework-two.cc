@@ -76,7 +76,7 @@ void Display() {
   }
 
   glTranslatef(0.0f, 0.0f, 0.5f);
-  // TODO glRotate to rotate entire arm clockwise or counter-clockwise
+  glRotatef(rotation_angle, 0.0f, 0.0f, 1.0f);
 
   // Shoulder joint
   glPushMatrix();
@@ -238,6 +238,10 @@ void RegisterKey(unsigned char key, int x, int y) {
     wrist -= 10.0f;
   else if (key == 'q' || key == 'Q')
     exit(0);
+  else if (key == 'r')
+    rotation_angle += 10.0f;
+  else if (key == 'R')
+    rotation_angle -= 10.0f;
   else if (key == 'u')
     draw_solid = !draw_solid;
 
