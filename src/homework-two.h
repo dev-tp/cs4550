@@ -21,12 +21,14 @@
   else                               \
     glutWireSphere(radius, 32, 16);
 
-bool active = true;
-bool display_coordinate_system = true;
+bool active;
+bool display_coordinate_system;
 bool draw_solid = true;
 
 float finger = 30.0f;
 float lower_arm = 140.0f;
+float position_x = 0.0f;
+float position_z = 0.0f;
 float rotation_angle = 0.0f;
 float upper_arm = -60.0f;
 float wrist = 10.0f;

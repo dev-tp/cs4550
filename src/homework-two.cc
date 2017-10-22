@@ -1,23 +1,13 @@
 #include "homework-two.h"
 
 #include <math.h>
-#include <unistd.h>
 
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  double dimension = 45.0;  // Dimension of the orthagonal box
-
-  double camera_x = -2 * dimension * sin(M_PI / 180.0 * azimuth) *
-    cos(M_PI / 180.0 * elevation);
-  double camera_z = 2 * dimension * cos(M_PI / 180.0 * azimuth) *
-    cos(M_PI / 180.0 * elevation);
-  double camera_y = 2 * dimension * sin(M_PI / 180.0 * elevation);
-
-  gluLookAt(camera_x, camera_y, camera_z, 0.0, 0.0, 0.0, 0.0,
-            cos(M_PI / 180.0 * elevation), 0.0);
+  gluLookAt(25.0, 25.0, 25.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
   if (display_coordinate_system) {
     glBegin(GL_LINES);
@@ -42,7 +32,7 @@ void Display() {
 
   glColor3f(0.5f, 0.5f, 0.5f);
 
-  // TODO glTranslate to move robotic arm on direction it is pointing
+  glTranslatef(position_x, 0.0f, position_z);
 
   glPushMatrix();
   glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
@@ -180,12 +170,6 @@ void RenderFinger(float x, float y, float z) {
   glPopMatrix();
 }
 
-void Idle() {
-  usleep(1000000);
-  rotation_angle += 36.0f;
-  glutPostRedisplay();
-}
-
 void Initialize() {
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
@@ -251,17 +235,13 @@ void RegisterKey(unsigned char key, int x, int y) {
 }
 
 void RegisterSpecialKey(int key, int x, int y) {
-  if (key == GLUT_KEY_RIGHT)
-    azimuth -= 5;
-  else if (key == GLUT_KEY_LEFT)
-    azimuth += 5;
-  else if (key == GLUT_KEY_UP)
-    elevation += 5;
-  else if (key == GLUT_KEY_DOWN)
-    elevation -= 5;
-
-  azimuth %= 360;
-  elevation %= 360;
+  if (key == GLUT_KEY_UP && active) {
+    position_x += 0.1f * sin(M_PI / 180.0f * rotation_angle);
+    position_z += 0.1f * cos(M_PI / 180.0f * rotation_angle);
+  } else if (key == GLUT_KEY_DOWN && active) {
+    position_x -= 0.1f * sin(M_PI / 180.0f * rotation_angle);
+    position_z -= 0.1f * cos(M_PI / 180.0f * rotation_angle);
+  }
 
   glutPostRedisplay();
 }
@@ -277,7 +257,6 @@ int main(int argc, char* argv[]) {
   Initialize();
 
   glutDisplayFunc(Display);
-  // glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKey);
   glutSpecialFunc(RegisterSpecialKey);
 
