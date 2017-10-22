@@ -28,4 +28,6 @@ int azimuth = 340;
 int elevation = 30;
 float rotation_angle = 0.0f;
 
+void RenderFinger();
+
 #endif  // CS4550_HOMEWORK_TWO_H_
