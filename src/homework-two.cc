@@ -1,6 +1,7 @@
 #include "homework-two.h"
 
 #include <math.h>
+#include <unistd.h>
 
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -114,6 +115,12 @@ void Display() {
   glutSwapBuffers();
 }
 
+void Idle() {
+  usleep(1000000);
+  rotation_angle += 36.0f;
+  glutPostRedisplay();
+}
+
 void Initialize() {
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
@@ -183,6 +190,7 @@ int main(int argc, char* argv[]) {
   Initialize();
 
   glutDisplayFunc(Display);
+  glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKey);
   glutSpecialFunc(RegisterSpecialKey);
 

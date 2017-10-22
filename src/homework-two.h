@@ -26,5 +26,6 @@ bool draw_solid = true;
 
 int azimuth = 340;
 int elevation = 30;
+float rotation_angle = 0.0f;
 
 #endif  // CS4550_HOMEWORK_TWO_H_
