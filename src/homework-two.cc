@@ -30,6 +30,52 @@ void Display() {
     glEnd();
   }
 
+  glColor3f(0.8f, 0.8f, 0.8f);
+
+  float wall_height = 80.0f;
+
+  // Floor
+  glPushMatrix();
+  glTranslatef(0.0f, 0.0f, 0.0f);
+  glScalef(wall_height, 0.1f, wall_height);
+  DRAW_CUBE();
+  glPopMatrix();
+
+  // Ceiling
+  glPushMatrix();
+  glTranslatef(0.0f, wall_height, 0.0f);
+  glScalef(wall_height, 0.1f, wall_height);
+  DRAW_CUBE();
+  glPopMatrix();
+
+  // Wall
+  glPushMatrix();
+  glTranslatef(0.0f, wall_height / 2.0f, -wall_height / 2.0f);
+  glScalef(wall_height, wall_height, 0.1f);
+  DRAW_CUBE();
+  glPopMatrix();
+
+  // Wall
+  glPushMatrix();
+  glTranslatef(-wall_height / 2.0f, wall_height / 2.0f, 0.0f);
+  glScalef(0.1f, wall_height, wall_height);
+  DRAW_CUBE();
+  glPopMatrix();
+
+  // Wall
+  glPushMatrix();
+  glTranslatef(wall_height / 2.0f, wall_height / 2.0f, 0.0f);
+  glScalef(0.1f, wall_height, wall_height);
+  DRAW_CUBE();
+  glPopMatrix();
+
+  // Wall
+  glPushMatrix();
+  glTranslatef(0.0f, wall_height / 2.0f, wall_height / 2.0f);
+  glScalef(wall_height, wall_height, 0.1f);
+  DRAW_CUBE();
+  glPopMatrix();
+
   glColor3f(0.5f, 0.5f, 0.5f);
 
   glTranslatef(position_x, 0.0f, position_z);
@@ -205,13 +251,13 @@ void RegisterKey(unsigned char key, int x, int y) {
   if (key == 'c')
     display_coordinate_system = !display_coordinate_system;
   else if (key == 'i' && active)
-    upper_arm -= 10.0f;
-  else if (key == 'I' && active)
     upper_arm += 10.0f;
+  else if (key == 'I' && active)
+    upper_arm -= 10.0f;
   else if (key == 'j' && active)
-    lower_arm += 10.0f;
-  else if (key == 'J' && active)
     lower_arm -= 10.0f;
+  else if (key == 'J' && active)
+    lower_arm += 10.0f;
   else if (key == 'm' && active)
     finger += 10.0f;
   else if (key == 'M' && active)
