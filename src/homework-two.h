@@ -33,6 +33,8 @@ float rotation_angle = 0.0f;
 float upper_arm = -60.0f;
 float wrist = 10.0f;
 
+int window_id = 0;
+
 void RenderFinger(float x, float y, float z);
 void Reset();
 

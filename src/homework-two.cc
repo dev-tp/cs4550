@@ -233,36 +233,38 @@ void Initialize() {
 }
 
 void RegisterKey(unsigned char key, int x, int y) {
-  if (key == 27)
+  if (key == 27) {
     Reset();
-  else if (key == 'c')
+  } else if (key == 'c') {
     display_coordinate_system = !display_coordinate_system;
-  else if (key == 'i' && active)
+  } else if (key == 'i' && active) {
     upper_arm += 10.0f;
-  else if (key == 'I' && active)
+  } else if (key == 'I' && active) {
     upper_arm -= 10.0f;
-  else if (key == 'j' && active)
+  } else if (key == 'j' && active) {
     lower_arm -= 10.0f;
-  else if (key == 'J' && active)
+  } else if (key == 'J' && active) {
     lower_arm += 10.0f;
-  else if (key == 'm' && active)
+  } else if (key == 'm' && active) {
     finger += 10.0f;
-  else if (key == 'M' && active)
+  } else if (key == 'M' && active) {
     finger -= 10.0f;
-  else if (key == 'n' && active)
+  } else if (key == 'n' && active) {
     wrist += 10.0f;
-  else if (key == 'N' && active)
+  } else if (key == 'N' && active) {
     wrist -= 10.0f;
-  else if (key == 'o')
+  } else if (key == 'o') {
     active = !active;
-  else if (key == 'q' || key == 'Q')
+  } else if (key == 'q' || key == 'Q') {
+    glutDestroyWindow(window_id);
     exit(0);
-  else if (key == 'r' && active)
+  } else if (key == 'r' && active) {
     rotation_angle += 10.0f;
-  else if (key == 'R' && active)
+  } else if (key == 'R' && active) {
     rotation_angle -= 10.0f;
-  else if (key == 'u')
+  } else if (key == 'u') {
     draw_solid = !draw_solid;
+  }
 
   glutPostRedisplay();
 }
@@ -310,7 +312,7 @@ int main(int argc, char* argv[]) {
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
   glutInitWindowPosition(POSITION_X, POSITION_Y);
-  glutCreateWindow("Homework 2");
+  window_id = glutCreateWindow("Homework 2");
 
   Initialize();
 
