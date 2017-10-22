@@ -220,27 +220,29 @@ void Initialize() {
 void RegisterKey(unsigned char key, int x, int y) {
   if (key == 'c')
     display_coordinate_system = !display_coordinate_system;
-  else if (key == 'i')
+  else if (key == 'i' && active)
     upper_arm -= 10.0f;
-  else if (key == 'I')
+  else if (key == 'I' && active)
     upper_arm += 10.0f;
-  else if (key == 'j')
+  else if (key == 'j' && active)
     lower_arm += 10.0f;
-  else if (key == 'J')
+  else if (key == 'J' && active)
     lower_arm -= 10.0f;
-  else if (key == 'm')
+  else if (key == 'm' && active)
     finger += 10.0f;
-  else if (key == 'M')
+  else if (key == 'M' && active)
     finger -= 10.0f;
-  else if (key == 'n')
+  else if (key == 'n' && active)
     wrist += 10.0f;
-  else if (key == 'N')
+  else if (key == 'N' && active)
     wrist -= 10.0f;
+  else if (key == 'o')
+    active = !active;
   else if (key == 'q' || key == 'Q')
     exit(0);
-  else if (key == 'r')
+  else if (key == 'r' && active)
     rotation_angle += 10.0f;
-  else if (key == 'R')
+  else if (key == 'R' && active)
     rotation_angle -= 10.0f;
   else if (key == 'u')
     draw_solid = !draw_solid;

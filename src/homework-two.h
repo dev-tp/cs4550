@@ -21,17 +21,18 @@
   else                               \
     glutWireSphere(radius, 32, 16);
 
+bool active = true;
 bool display_coordinate_system = true;
 bool draw_solid = true;
 
-int azimuth = 340;
-int elevation = 30;
-float rotation_angle = 0.0f;
-
 float finger = 30.0f;
 float lower_arm = 140.0f;
+float rotation_angle = 0.0f;
 float upper_arm = -60.0f;
 float wrist = 10.0f;
+
+int azimuth = 340;
+int elevation = 30;
 
 void RenderFinger(float x, float y, float z);
 
