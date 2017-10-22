@@ -42,6 +42,42 @@ void Display() {
 
   glColor3f(0.5f, 0.5f, 0.5f);
 
+  // TODO glTranslate to move robotic arm on direction it is pointing
+
+  glPushMatrix();
+  glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
+
+  // Base
+  if (draw_solid) {
+    glPushMatrix();
+
+    GLUquadric* quadric = gluNewQuadric();
+    // gluQuadricDrawStyle(quadric, GL_LINE);
+
+    gluCylinder(quadric, 0.8, 0.8, 0.5, 32, 16);
+    glPopMatrix();
+
+    gluDeleteQuadric(quadric);
+  }
+
+  float z_axis[] = {0.0f, 0.5f};
+
+  for (float z : z_axis) {
+    glBegin(draw_solid ? GL_POLYGON : GL_LINE_LOOP);
+
+    for (float theta = 0.0f; theta < 1.0f; theta += 0.01f) {
+      float x = 0.8f * cos(2 * M_PI * theta);
+      float y = 0.8f * sin(2 * M_PI * theta);
+
+      glVertex3f(x, y, z);
+    }
+
+    glEnd();
+  }
+
+  glTranslatef(0.0f, 0.0f, 0.5f);
+  // TODO glRotate to rotate entire arm clockwise or counter-clockwise
+
   // Shoulder joint
   glPushMatrix();
   glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
@@ -122,6 +158,8 @@ void Display() {
   glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
   DRAW_CUBE();
+  glPopMatrix();
+
   glPopMatrix();
 
   glutSwapBuffers();
