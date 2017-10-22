@@ -41,25 +41,28 @@ void Display() {
   }
 
   glColor3f(0.5f, 0.5f, 0.5f);
-  glTranslatef(0.0f, 1.5f, 0.0f);
-  glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
 
   // Shoulder joint
   glPushMatrix();
-  glTranslatef(0.2f, 0.0f, -1.0f);
+  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
   DRAW_SPHERE(0.5);
   glPopMatrix();
 
   // Upper arm
   glPushMatrix();
+  glTranslatef(-0.2f, 0.0f, 0.0f);
+  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
   DRAW_CUBE();
   glPopMatrix();
 
   // Upper arm
   glPushMatrix();
+  glTranslatef(0.2f, 0.0f, 0.0f);
+  glRotatef(rotation_angle, 1.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
-  glTranslatef(2.0f, 0.0f, 0.0f);
   DRAW_CUBE();
   glPopMatrix();
 
