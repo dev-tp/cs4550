@@ -238,21 +238,21 @@ void RegisterKey(unsigned char key, int x, int y) {
   } else if (key == 'c') {
     display_coordinate_system = !display_coordinate_system;
   } else if (key == 'i' && active) {
-    upper_arm += 10.0f;
+    upper_arm += upper_arm < 80.0f ? 10.0f : 0.0f;
   } else if (key == 'I' && active) {
-    upper_arm -= 10.0f;
+    upper_arm -= upper_arm > -80.0f ? 10.0f : 0.0f;
   } else if (key == 'j' && active) {
-    lower_arm -= 10.0f;
+    lower_arm -= lower_arm > -160.0f ? 10.0f : 0.0f;
   } else if (key == 'J' && active) {
-    lower_arm += 10.0f;
+    lower_arm += lower_arm < 160.0f ? 10.0f : 0.0f;
   } else if (key == 'm' && active) {
-    finger += 10.0f;
+    finger += finger < 60.0f ? 10.0f : 0.0f;
   } else if (key == 'M' && active) {
-    finger -= 10.0f;
+    finger -= finger > -60.0f ? 10.0f : 0.0f;
   } else if (key == 'n' && active) {
-    wrist += 10.0f;
+    wrist += wrist < 120.0f ? 10.0f : 0.0f;
   } else if (key == 'N' && active) {
-    wrist -= 10.0f;
+    wrist -= wrist > -90.0f ? 10.0f : 0.0f;
   } else if (key == 'o') {
     active = !active;
   } else if (key == 'q' || key == 'Q') {
