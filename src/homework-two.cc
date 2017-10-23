@@ -165,8 +165,6 @@ void Display() {
     DRAW_SPHERE(0.3);
     glPopMatrix();
     active = false;
-  } else {
-    active = true;
   }
 
   DRAW_SPHERE(0.3);
@@ -219,6 +217,7 @@ void Idle() {
   if (step == 0 && throwing_ball) {
     finger = -60.0f;
   } else if (step == 50 && throwing_ball) {
+    active = true;
     ball_movement = 0.5f;
     step = 0;
     throwing_ball = false;
@@ -282,7 +281,7 @@ void RegisterKey(unsigned char key, int x, int y) {
     draw_solid = !draw_solid;
   }
 
-  camera_rotating = key == 's';  
+  camera_rotating = key == 's';
 
   glutPostRedisplay();
 }
