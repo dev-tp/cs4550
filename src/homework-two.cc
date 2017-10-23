@@ -88,7 +88,7 @@ void Display() {
   // Shoulder joint
   glPushMatrix();
   glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
-  DRAW_SPHERE(0.5);
+  DrawSphere(0.5);
   glPopMatrix();
 
   // Upper arm
@@ -97,7 +97,7 @@ void Display() {
   glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
-  DRAW_CUBE();
+  DrawCube();
   glPopMatrix();
 
   // Upper arm
@@ -106,14 +106,14 @@ void Display() {
   glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
-  DRAW_CUBE();
+  DrawCube();
   glPopMatrix();
 
   // Arm joint
   glPushMatrix();
   glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 2.0f);
-  DRAW_SPHERE(0.4);
+  DrawSphere(0.4);
   glPopMatrix();
 
   // Lower arm
@@ -162,22 +162,36 @@ void Display() {
   if (throwing_ball) {
     glPushMatrix();
     glTranslatef(0.0f, 0.0f, ball_movement);
-    DRAW_SPHERE(0.3);
+    DrawSphere(0.3);
     glPopMatrix();
     active = false;
   }
 
-  DRAW_SPHERE(0.3);
+  DrawSphere(0.3);
   glPopMatrix();
 
   glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
-  DRAW_CUBE();
+  DrawCube();
   glPopMatrix();
 
   glPopMatrix();
 
   glutSwapBuffers();
+}
+
+void DrawCube() {
+  if (draw_solid)
+    glutSolidCube(1.0);
+  else
+    glutWireCube(1.0);
+}
+
+void DrawSphere(double radius) {
+  if (draw_solid)
+    glutSolidSphere(radius, 32, 16);
+  else
+    glutWireSphere(radius, 32, 16);
 }
 
 void Initialize() {
@@ -301,7 +315,7 @@ void RegisterSpecialKey(int key, int x, int y) {
 void RenderFinger(float x, float y, float z) {
   glPushMatrix();
   glScalef(0.1f, 0.1f, 0.4f);
-  DRAW_CUBE();
+  DrawCube();
   glPopMatrix();
 
   glPushMatrix();
@@ -309,7 +323,7 @@ void RenderFinger(float x, float y, float z) {
   glRotatef(finger, x, y, z);
   glTranslatef(0.0f, 0.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 1.0f);
-  DRAW_CUBE();
+  DrawCube();
   glPopMatrix();
 }
 
@@ -318,7 +332,7 @@ void RenderWall(float x, float y, float z, float translate_x, float translate_y,
   glPushMatrix();
   glTranslatef(translate_x, translate_y, translate_z);
   glScalef(x, y, z);
-  DRAW_CUBE();
+  DrawCube();
   glPopMatrix();
 }
 
