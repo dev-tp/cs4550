@@ -8,7 +8,7 @@ void Display() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  gluLookAt(25.0, 25.0, 25.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+  gluLookAt(camera_x, camera_y, camera_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
   if (display_coordinate_system) {
     glBegin(GL_LINES);
@@ -234,6 +234,16 @@ void Idle() {
 
     glutPostRedisplay();
   }
+
+  if (camera_rotating) {
+    static double theta = 0.0;
+    theta += 0.01f;
+
+    camera_x = 25.0 * sin(theta);
+    camera_z = 25.0 * cos(theta);
+
+    glutPostRedisplay();
+  }
 }
 
 void RegisterKey(unsigned char key, int x, int y) {
@@ -271,6 +281,8 @@ void RegisterKey(unsigned char key, int x, int y) {
   } else if (key == 'u') {
     draw_solid = !draw_solid;
   }
+
+  camera_rotating = key == 's';  
 
   glutPostRedisplay();
 }
