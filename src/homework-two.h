@@ -24,7 +24,9 @@
 bool active;
 bool display_coordinate_system;
 bool draw_solid = true;
+bool throwing_ball;
 
+float ball_movement = 0.5f;
 float finger = 30.0f;
 float lower_arm = 140.0f;
 float position_x = 0.0f;

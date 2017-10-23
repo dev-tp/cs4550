@@ -1,6 +1,7 @@
 #include "homework-two.h"
 
 #include <math.h>
+#include <unistd.h>
 
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -158,6 +159,16 @@ void Display() {
   RenderFinger(-1.0f, 0.0f, 0.0f);
   glPopMatrix();
 
+  if (throwing_ball) {
+    glPushMatrix();
+    glTranslatef(0.0f, 0.0f, ball_movement);
+    DRAW_SPHERE(0.3);
+    glPopMatrix();
+    active = false;
+  } else {
+    active = true;
+  }
+
   DRAW_SPHERE(0.3);
   glPopMatrix();
 
@@ -202,9 +213,34 @@ void Initialize() {
   glOrtho(-3.5, 3.5, -3.5, 3.5, 0.1, 100.0);
 }
 
+void Idle() {
+  static int step = 0;
+
+  if (step == 0 && throwing_ball) {
+    finger = -60.0f;
+  } else if (step == 50 && throwing_ball) {
+    ball_movement = 0.5f;
+    step = 0;
+    throwing_ball = false;
+
+    glutPostRedisplay();
+  }
+
+  if (throwing_ball) {
+    usleep(100000);
+
+    ball_movement += 0.1f;
+    step++;
+
+    glutPostRedisplay();
+  }
+}
+
 void RegisterKey(unsigned char key, int x, int y) {
   if (key == 27) {
     Reset();
+  } else if (key == 'a' && active) {
+    throwing_ball = true;
   } else if (key == 'c') {
     display_coordinate_system = !display_coordinate_system;
   } else if (key == 'i' && active) {
@@ -296,6 +332,7 @@ int main(int argc, char* argv[]) {
   Initialize();
 
   glutDisplayFunc(Display);
+  glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKey);
   glutSpecialFunc(RegisterSpecialKey);
 
