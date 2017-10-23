@@ -32,49 +32,19 @@ void Display() {
 
   glColor3f(0.8f, 0.8f, 0.8f);
 
-  float wall_height = 80.0f;
+  float depth = 80.0f;
 
   // Floor
-  glPushMatrix();
-  glTranslatef(0.0f, 0.0f, 0.0f);
-  glScalef(wall_height, 0.0f, wall_height);
-  DRAW_CUBE();
-  glPopMatrix();
+  RenderWall(depth, 0.0f, depth, 0.0f, 0.0f, 0.0f);
 
   // Ceiling
-  glPushMatrix();
-  glTranslatef(0.0f, wall_height, 0.0f);
-  glScalef(wall_height, 0.1f, wall_height);
-  DRAW_CUBE();
-  glPopMatrix();
+  RenderWall(depth, 0.1f, depth, 0.0f, depth, 0.0f);
 
-  // Wall
-  glPushMatrix();
-  glTranslatef(0.0f, wall_height / 2.0f, -wall_height / 2.0f);
-  glScalef(wall_height, wall_height, 0.1f);
-  DRAW_CUBE();
-  glPopMatrix();
-
-  // Wall
-  glPushMatrix();
-  glTranslatef(-wall_height / 2.0f, wall_height / 2.0f, 0.0f);
-  glScalef(0.1f, wall_height, wall_height);
-  DRAW_CUBE();
-  glPopMatrix();
-
-  // Wall
-  glPushMatrix();
-  glTranslatef(wall_height / 2.0f, wall_height / 2.0f, 0.0f);
-  glScalef(0.1f, wall_height, wall_height);
-  DRAW_CUBE();
-  glPopMatrix();
-
-  // Wall
-  glPushMatrix();
-  glTranslatef(0.0f, wall_height / 2.0f, wall_height / 2.0f);
-  glScalef(wall_height, wall_height, 0.1f);
-  DRAW_CUBE();
-  glPopMatrix();
+  // Walls
+  RenderWall(depth, depth, 0.1f, 0.0f, depth / 2.0f, -depth / 2.0f);
+  RenderWall(0.1f, depth, depth, -depth / 2.0f, depth / 2.0f, 0.0f);
+  RenderWall(0.1f, depth, depth, depth / 2.0f, depth / 2.0f, 0.0f);
+  RenderWall(depth, depth, 0.1f, 0.0f, depth / 2.0f, depth / 2.0f);
 
   glColor3f(0.5f, 0.5f, 0.5f);
 
@@ -292,6 +262,15 @@ void RenderFinger(float x, float y, float z) {
   glRotatef(finger, x, y, z);
   glTranslatef(0.0f, 0.0f, 0.0f);
   glTranslatef(0.0f, 0.0f, 1.0f);
+  DRAW_CUBE();
+  glPopMatrix();
+}
+
+void RenderWall(float x, float y, float z, float translate_x, float translate_y,
+                float translate_z) {
+  glPushMatrix();
+  glTranslatef(translate_x, translate_y, translate_z);
+  glScalef(x, y, z);
   DRAW_CUBE();
   glPopMatrix();
 }

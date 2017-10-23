@@ -36,6 +36,8 @@ float wrist = 10.0f;
 int window_id = 0;
 
 void RenderFinger(float x, float y, float z);
+void RenderWall(float x, float y, float z, float translate_x, float translate_y,
+                float translate_z);
 void Reset();
 
 #endif  // CS4550_HOMEWORK_TWO_H_
