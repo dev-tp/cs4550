@@ -281,7 +281,7 @@ void RegisterKey(unsigned char key, int x, int y) {
     draw_solid = !draw_solid;
   }
 
-  camera_rotating = key == 's';
+  camera_rotating = key == 's' && !camera_rotating;
 
   glutPostRedisplay();
 }
