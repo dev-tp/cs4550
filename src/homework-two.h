@@ -25,11 +25,13 @@ bool active;
 bool camera_rotating;
 bool display_coordinate_system;
 bool draw_solid = true;
+bool reset;
 bool throwing_ball;
 
 double camera_x = 25.0;
 double camera_y = 25.0;
 double camera_z = 25.0;
+double theta = 0.0;
 
 float ball_movement = 0.5f;
 float finger = 30.0f;

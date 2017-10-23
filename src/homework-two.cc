@@ -214,6 +214,11 @@ void Initialize() {
 void Idle() {
   static int step = 0;
 
+  if (reset) {
+    step = 50;
+    reset = false;
+  }
+
   if (step == 0 && throwing_ball) {
     finger = -60.0f;
   } else if (step == 50 && throwing_ball) {
@@ -221,8 +226,6 @@ void Idle() {
     ball_movement = 0.5f;
     step = 0;
     throwing_ball = false;
-
-    glutPostRedisplay();
   }
 
   if (throwing_ball) {
@@ -230,19 +233,16 @@ void Idle() {
 
     ball_movement += 0.1f;
     step++;
-
-    glutPostRedisplay();
   }
 
   if (camera_rotating) {
-    static double theta = 0.0;
     theta += 0.01f;
 
     camera_x = 25.0 * sin(theta);
     camera_z = 25.0 * cos(theta);
-
-    glutPostRedisplay();
   }
+
+  glutPostRedisplay();
 }
 
 void RegisterKey(unsigned char key, int x, int y) {
@@ -323,11 +323,15 @@ void RenderWall(float x, float y, float z, float translate_x, float translate_y,
 }
 
 void Reset() {
+  camera_x = 25.0;
+  camera_z = 25.0;
   finger = 30.0f;
   lower_arm = 140.0f;
   position_x = 0.0f;
   position_z = 0.0f;
+  reset = true;
   rotation_angle = 0.0f;
+  theta = 0.0;
   upper_arm = -60.0f;
   wrist = 10.0f;
 }
