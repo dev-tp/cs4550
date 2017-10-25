@@ -2,11 +2,17 @@
 
 #include <GL/glut.h>
 
+Mesh::Mesh() {
+  faces = nullptr;
+  normal_vectors = nullptr;
+  points = nullptr;
+}
+
 Mesh::~Mesh() {
   if (num_of_vertices != 0) {
-    delete[] points;
-    delete[] normal_vectors;
     delete[] faces;
+    delete[] normal_vectors;
+    delete[] points;
   }
 }
 

@@ -17,7 +17,7 @@ class Mesh {
 public:
   int ready_to_draw;
 
-  Mesh() { }
+  Mesh();
   ~Mesh();
 
   void CreatePrism(int vertex_count, Point3* point, float length);

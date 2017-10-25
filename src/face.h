@@ -10,6 +10,7 @@ struct Face {
   Index* indices;
   int num_of_vertices;
 
+  Face() { indices = nullptr; }
   ~Face() { delete[] indices; }
 };
 
