@@ -32,7 +32,7 @@ void Display() {
     else
       triangular_prism.DrawSolid();
 
-    usleep(100000);
+    usleep(1000);
   }
 
   glFlush();

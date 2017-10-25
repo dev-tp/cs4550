@@ -9,13 +9,13 @@ public:
   float y;
   float z;
 
-  Vector3(float x = 0, float y = 0, float z = 0) {
+  Vector3(float x = 0.0f, float y = 0.0f, float z = 0.0f) {
     this->x = x;
     this->y = y;
     this->z = z;
   }
 
-  Vector3(Vector3& v) {
+  Vector3(const Vector3& v) {
     x = v.x;
     y = v.y;
     z = v.z;
