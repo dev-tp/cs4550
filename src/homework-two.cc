@@ -1,22 +1,14 @@
 #include "homework-two.h"
 
 #include <math.h>
+#include <unistd.h>
 
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  double dimension = 45.0;  // Dimension of the orthagonal box
-
-  double camera_x = -2 * dimension * sin(M_PI / 180.0 * azimuth) *
-    cos(M_PI / 180.0 * elevation);
-  double camera_z = 2 * dimension * cos(M_PI / 180.0 * azimuth) *
-    cos(M_PI / 180.0 * elevation);
-  double camera_y = 2 * dimension * sin(M_PI / 180.0 * elevation);
-
-  gluLookAt(camera_x, camera_y, camera_z, 0.0, 0.0, 0.0, 0.0,
-            cos(M_PI / 180.0 * elevation), 0.0);
+  gluLookAt(camera_x, camera_y, camera_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
   if (display_coordinate_system) {
     glBegin(GL_LINES);
@@ -39,14 +31,32 @@ void Display() {
     glEnd();
   }
 
+  glColor3f(0.8f, 0.8f, 0.8f);
+
+  float depth = 80.0f;
+
+  // Floor
+  RenderWall(depth, 0.0f, depth, 0.0f, 0.0f, 0.0f);
+
+  // Ceiling
+  RenderWall(depth, 0.1f, depth, 0.0f, depth, 0.0f);
+
+  // Walls
+  RenderWall(depth, depth, 0.1f, 0.0f, depth / 2.0f, -depth / 2.0f);
+  RenderWall(0.1f, depth, depth, -depth / 2.0f, depth / 2.0f, 0.0f);
+  RenderWall(0.1f, depth, depth, depth / 2.0f, depth / 2.0f, 0.0f);
+  RenderWall(depth, depth, 0.1f, 0.0f, depth / 2.0f, depth / 2.0f);
+
   glColor3f(0.5f, 0.5f, 0.5f);
-  glTranslatef(0.0f, 1.5f, 0.0f);
+
+  glTranslatef(position_x, 0.0f, position_z);
+
+  glPushMatrix();
   glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
 
-  // Base cylinder
+  // Base
   if (draw_solid) {
     glPushMatrix();
-    glTranslatef(0.2f, 0.0f, -1.5f);
 
     GLUquadric* quadric = gluNewQuadric();
     // gluQuadricDrawStyle(quadric, GL_LINE);
@@ -57,9 +67,8 @@ void Display() {
     gluDeleteQuadric(quadric);
   }
 
-  float z_axis[] = {-1.0f, -1.5f};
+  float z_axis[] = {0.0f, 0.5f};
 
-  // Add the cylinder's missing top and bottom surfaces
   for (float z : z_axis) {
     glBegin(draw_solid ? GL_POLYGON : GL_LINE_LOOP);
 
@@ -67,51 +76,122 @@ void Display() {
       float x = 0.8f * cos(2 * M_PI * theta);
       float y = 0.8f * sin(2 * M_PI * theta);
 
-      glVertex3f(0.2f + x, y, z);
+      glVertex3f(x, y, z);
     }
 
     glEnd();
   }
 
+  glTranslatef(0.0f, 0.0f, 0.5f);
+  glRotatef(rotation_angle, 0.0f, 0.0f, 1.0f);
+
   // Shoulder joint
   glPushMatrix();
-  glTranslatef(0.2f, 0.0f, -1.0f);
-  DRAW_SPHERE(0.5);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
+  DrawSphere(0.5);
   glPopMatrix();
 
   // Upper arm
   glPushMatrix();
+  glTranslatef(-0.2f, 0.0f, 0.0f);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
-  DRAW_CUBE();
+  DrawCube();
   glPopMatrix();
 
   // Upper arm
   glPushMatrix();
+  glTranslatef(0.2f, 0.0f, 0.0f);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 1.0f);
   glScalef(0.2f, 0.2f, 2.0f);
-  glTranslatef(2.0f, 0.0f, 0.0f);
-  DRAW_CUBE();
+  DrawCube();
   glPopMatrix();
 
   // Arm joint
   glPushMatrix();
-  glTranslatef(0.2f, 0.0f, 0.8f);
-  DRAW_SPHERE(0.4);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 2.0f);
+  DrawSphere(0.4);
   glPopMatrix();
 
   // Lower arm
   glPushMatrix();
-  glScalef(0.2f, 0.2f, 2.0f);
-  glTranslatef(1.0f, 0.0f, 0.8f);
-  DRAW_CUBE();
-  glPopMatrix();
+  glTranslatef(0.0f, 0.0f, 0.0f);
+  glRotatef(upper_arm, 1.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 2.8f);
+  glTranslatef(0.0f, 0.0f, -0.8f);
+  glRotatef(lower_arm, 1.0f, 0.0f, 0.0f);
 
   // Hand joint
   glPushMatrix();
-  glTranslatef(0.2f, 0.0f, 2.8f);
-  DRAW_SPHERE(0.3);
+  glTranslatef(0.0f, 0.0f, 1.8f);
+  glRotatef(wrist, 1.0f, 0.0f, 0.0f);
+
+  glPushMatrix();
+  glTranslatef(-0.2f, 0.0f, 0.2f);
+  glRotatef(10.0f, 0.0f, -1.0f, 0.0f);
+  RenderFinger(0.0f, 1.0f, 0.0f);
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslatef(-0.1f, 0.2f, 0.2f);
+  glRotatef(10.0f, 0.0f, -1.0f, -1.0f);
+  RenderFinger(0.0f, 1.0f, 0.0f);
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslatef(0.1f, 0.2f, 0.2f);
+  glRotatef(10.0f, 0.0f, 1.0f, 1.0f);
+  RenderFinger(0.0f, -1.0f, 0.0f);
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslatef(0.2f, 0.0f, 0.2f);
+  glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+  RenderFinger(0.0f, -1.0f, 0.0f);
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslatef(0.0f, -0.2f, 0.2f);
+  glRotatef(10.0f, 1.0f, 0.0f, 0.0f);
+  RenderFinger(-1.0f, 0.0f, 0.0f);
+  glPopMatrix();
+
+  if (throwing_ball) {
+    glPushMatrix();
+    glTranslatef(0.0f, 0.0f, ball_movement);
+    DrawSphere(0.3);
+    glPopMatrix();
+    active = false;
+  }
+
+  DrawSphere(0.3);
+  glPopMatrix();
+
+  glTranslatef(0.0f, 0.0f, 1.0f);
+  glScalef(0.2f, 0.2f, 2.0f);
+  DrawCube();
+  glPopMatrix();
+
   glPopMatrix();
 
   glutSwapBuffers();
+}
+
+void DrawCube() {
+  if (draw_solid)
+    glutSolidCube(1.0);
+  else
+    glutWireCube(1.0);
+}
+
+void DrawSphere(double radius) {
+  if (draw_solid)
+    glutSolidSphere(radius, 32, 16);
+  else
+    glutWireSphere(radius, 32, 16);
 }
 
 void Initialize() {
@@ -145,31 +225,129 @@ void Initialize() {
   glOrtho(-3.5, 3.5, -3.5, 3.5, 0.1, 100.0);
 }
 
+void Idle() {
+  static int step = 0;
+
+  if (reset) {
+    step = 50;
+    reset = false;
+  }
+
+  if (step == 0 && throwing_ball) {
+    finger = -60.0f;
+  } else if (step == 50 && throwing_ball) {
+    active = true;
+    ball_movement = 0.5f;
+    step = 0;
+    throwing_ball = false;
+  }
+
+  if (throwing_ball) {
+    usleep(100000);
+
+    ball_movement += 0.1f;
+    step++;
+  }
+
+  if (camera_rotating) {
+    theta += 0.01f;
+
+    camera_x = 25.0 * sin(theta);
+    camera_z = 25.0 * cos(theta);
+  }
+
+  glutPostRedisplay();
+}
+
 void RegisterKey(unsigned char key, int x, int y) {
-  if (key == 'c')
+  if (key == 27) {
+    Reset();
+  } else if (key == 'a' && active) {
+    throwing_ball = true;
+  } else if (key == 'c') {
     display_coordinate_system = !display_coordinate_system;
-  else if (key == 'q' || key == 'Q')
+  } else if (key == 'i' && active) {
+    upper_arm += upper_arm < 80.0f ? 10.0f : 0.0f;
+  } else if (key == 'I' && active) {
+    upper_arm -= upper_arm > -80.0f ? 10.0f : 0.0f;
+  } else if (key == 'j' && active) {
+    lower_arm -= lower_arm > -160.0f ? 10.0f : 0.0f;
+  } else if (key == 'J' && active) {
+    lower_arm += lower_arm < 160.0f ? 10.0f : 0.0f;
+  } else if (key == 'm' && active) {
+    finger += finger < 60.0f ? 10.0f : 0.0f;
+  } else if (key == 'M' && active) {
+    finger -= finger > -60.0f ? 10.0f : 0.0f;
+  } else if (key == 'n' && active) {
+    wrist += wrist < 120.0f ? 10.0f : 0.0f;
+  } else if (key == 'N' && active) {
+    wrist -= wrist > -90.0f ? 10.0f : 0.0f;
+  } else if (key == 'o') {
+    active = !active;
+  } else if (key == 'q' || key == 'Q') {
+    glutDestroyWindow(window_id);
     exit(0);
-  else if (key == 'u')
+  } else if (key == 'r' && active) {
+    rotation_angle += 10.0f;
+  } else if (key == 'R' && active) {
+    rotation_angle -= 10.0f;
+  } else if (key == 'u') {
     draw_solid = !draw_solid;
+  }
+
+  camera_rotating = key == 's' && !camera_rotating;
 
   glutPostRedisplay();
 }
 
 void RegisterSpecialKey(int key, int x, int y) {
-  if (key == GLUT_KEY_RIGHT)
-    azimuth -= 5;
-  else if (key == GLUT_KEY_LEFT)
-    azimuth += 5;
-  else if (key == GLUT_KEY_UP)
-    elevation += 5;
-  else if (key == GLUT_KEY_DOWN)
-    elevation -= 5;
-
-  azimuth %= 360;
-  elevation %= 360;
+  if (key == GLUT_KEY_UP && active) {
+    position_x += 0.1f * sin(M_PI / 180.0f * rotation_angle);
+    position_z += 0.1f * cos(M_PI / 180.0f * rotation_angle);
+  } else if (key == GLUT_KEY_DOWN && active) {
+    position_x -= 0.1f * sin(M_PI / 180.0f * rotation_angle);
+    position_z -= 0.1f * cos(M_PI / 180.0f * rotation_angle);
+  }
 
   glutPostRedisplay();
+}
+
+void RenderFinger(float x, float y, float z) {
+  glPushMatrix();
+  glScalef(0.1f, 0.1f, 0.4f);
+  DrawCube();
+  glPopMatrix();
+
+  glPushMatrix();
+  glScalef(0.1f, 0.1f, 0.3f);
+  glRotatef(finger, x, y, z);
+  glTranslatef(0.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, 1.0f);
+  DrawCube();
+  glPopMatrix();
+}
+
+void RenderWall(float x, float y, float z, float translate_x, float translate_y,
+                float translate_z) {
+  glPushMatrix();
+  glTranslatef(translate_x, translate_y, translate_z);
+  glScalef(x, y, z);
+  DrawCube();
+  glPopMatrix();
+}
+
+void Reset() {
+  camera_x = 25.0;
+  camera_z = 25.0;
+  finger = 30.0f;
+  lower_arm = 140.0f;
+  position_x = 0.0f;
+  position_z = 0.0f;
+  reset = true;
+  rotation_angle = 0.0f;
+  theta = 0.0;
+  upper_arm = -60.0f;
+  wrist = 10.0f;
 }
 
 int main(int argc, char* argv[]) {
@@ -178,11 +356,12 @@ int main(int argc, char* argv[]) {
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
   glutInitWindowPosition(POSITION_X, POSITION_Y);
-  glutCreateWindow("Homework 2");
+  window_id = glutCreateWindow("Homework 2");
 
   Initialize();
 
   glutDisplayFunc(Display);
+  glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKey);
   glutSpecialFunc(RegisterSpecialKey);
 
