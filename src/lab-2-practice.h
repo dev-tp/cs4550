@@ -1,5 +1,5 @@
-#ifndef CS4550_LAB_THREE_H_
-#define CS4550_LAB_THREE_H_
+#ifndef CS4550_LAB_2_PRACTICE_H_
+#define CS4550_LAB_2_PRACTICE_H_
 
 struct Point {
   int x, y;
@@ -21,4 +21,4 @@ void GetSpecialKey(int, int, int);
 void Setup();
 void UpdateWindowDimensions();
 
-#endif  // CS4550_LAB_THREE_H_
+#endif  // CS4550_LAB_2_PRACTICE_H_

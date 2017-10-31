@@ -1,5 +1,5 @@
-#ifndef CS4550_HOMEWORK_ONE_H_
-#define CS4550_HOMEWORK_ONE_H_
+#ifndef CS4550_HOMEWORK_1_H_
+#define CS4550_HOMEWORK_1_H_
 
 #include <math.h>
 
@@ -52,4 +52,4 @@ std::vector<Ball> balls;
 float Distance(float x0, float y0, float x1, float y1);
 void InitialState();
 
-#endif  // CS4550_HOMEWORK_ONE_H_
+#endif  // CS4550_HOMEWORK_1_H_

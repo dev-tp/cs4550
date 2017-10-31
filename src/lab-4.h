@@ -1,5 +1,5 @@
-#ifndef CS4550_LAB_SIX_H_
-#define CS4550_LAB_SIX_H_
+#ifndef CS4550_LAB_4_H_
+#define CS4550_LAB_4_H_
 
 #include <GL/glut.h>
 
@@ -24,4 +24,4 @@ Vector3 octahedron[8];
 
 void DrawTriangle(int a, int b, int c);
 
-#endif  // CS4550_LAB_SIX_H_
+#endif  // CS4550_LAB_4_H_

@@ -1,5 +1,5 @@
-#ifndef CS4550_LAB_SEVEN_H_
-#define CS4550_LAB_SEVEN_H_
+#ifndef CS4550_LAB_5_H_
+#define CS4550_LAB_5_H_
 
 #include <GL/glut.h>
 
@@ -21,4 +21,4 @@ double view_x = 0.0;
 double view_y = 0.0;
 double view_z = 0.0;
 
-#endif  // CS4550_LAB_SEVEN_H_
+#endif  // CS4550_LAB_5_H_

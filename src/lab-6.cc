@@ -1,4 +1,4 @@
-#include "lab-eight.h"
+#include "lab-6.h"
 
 #include <unistd.h>
 
@@ -69,7 +69,6 @@ void Idle() {
   }
 }
 
-
 void RegisterKey(unsigned char key, int x, int y) {
   if (key == 'e' && !triangular_prism.ready_to_draw) {
     triangular_prism.CreatePrism(3, base, 10);
@@ -102,7 +101,7 @@ int main(int argc, char* argv[]) {
   glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
   glutInitWindowPosition(POSITION_X, POSITION_Y);
-  glutCreateWindow("Lab 8");
+  glutCreateWindow("Lab 6");
 
   // Initialize
   glEnable(GL_NORMALIZE);

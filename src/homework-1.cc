@@ -1,4 +1,4 @@
-#include "homework-one.h"
+#include "homework-1.h"
 
 #include <stdlib.h>
 #include <time.h>

@@ -1,5 +1,5 @@
-#ifndef CS4550_LAB_EIGHT_H_
-#define CS4550_LAB_EIGHT_H_
+#ifndef CS4550_LAB_6_H_
+#define CS4550_LAB_6_H_
 
 #include <GL/glut.h>
 
@@ -34,4 +34,4 @@ Point3 base[3];
 
 void DrawAxes();
 
-#endif  // CS4550_LAB_EIGHT_H_
+#endif  // CS4550_LAB_6_H_

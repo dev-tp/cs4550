@@ -1,4 +1,4 @@
-#include "lab-three.h"
+#include "lab-2-practice.h"
 
 #include "opengl-window.h"
 
@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
     corners[i].y += HALF_SCREEN_HEIGHT;
   }
 
-  CreateWindow("Lab 3 (Practice)", Setup);
+  CreateWindow("Lab 2 (Practice)", Setup);
 
   return 0;
 }

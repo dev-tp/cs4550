@@ -1,4 +1,4 @@
-#include "lab-nine.h"
+#include "lab-8.h"
 
 #include <GL/glut.h>
 
@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
   glutInitWindowPosition(POSITION_X, POSITION_Y);
-  glutCreateWindow("Lab 9");
+  glutCreateWindow("Lab 8");
 
   glutDisplayFunc(Display);
   glutKeyboardFunc(RegisterKey);

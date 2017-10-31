@@ -1,4 +1,4 @@
-#include "lab-four.h"
+#include "lab-2.h"
 
 #include <iostream>
 
@@ -109,7 +109,7 @@ int main(int argc, char* argv[]) {
   shape = option == 1 ? CIRCLE : ELLIPSE;
 
   glutInit(&argc, argv);
-  CreateWindow("Lab 4", Setup);
+  CreateWindow("Lab 2", Setup);
 
   return 0;
 }

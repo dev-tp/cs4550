@@ -1,5 +1,5 @@
-#ifndef CS4550_LAB_FOUR_H_
-#define CS4550_LAB_FOUR_H_
+#ifndef CS4550_LAB_2_H_
+#define CS4550_LAB_2_H_
 
 #include <math.h>
 
@@ -31,4 +31,4 @@ void GetSpecialKey(int, int, int);
 void Setup();
 void UpdateWindowDimensions();
 
-#endif  // CS4550_LAB_FOUR_H_
+#endif  // CS4550_LAB_2_H_

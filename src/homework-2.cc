@@ -1,4 +1,4 @@
-#include "homework-two.h"
+#include "homework-2.h"
 
 #include <math.h>
 #include <unistd.h>

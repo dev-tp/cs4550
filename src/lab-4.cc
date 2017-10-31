@@ -1,4 +1,4 @@
-#include "lab-six.h"
+#include "lab-4.h"
 
 void DrawOctahedron() {
   for (int i = 4; i < 6; i++)
@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
   glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
   glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
   glutInitWindowPosition(POSITION_X, POSITION_Y);
-  glutCreateWindow("Lab 6");
+  glutCreateWindow("Lab 4");
 
   glutDisplayFunc(Display);
   glutKeyboardFunc(RegisterKey);

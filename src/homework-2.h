@@ -1,5 +1,5 @@
-#ifndef CS4550_HOMEWORK_TWO_H_
-#define CS4550_HOMEWORK_TWO_H_
+#ifndef CS4550_HOMEWORK_2_H_
+#define CS4550_HOMEWORK_2_H_
 
 #include <GL/glut.h>
 
@@ -39,4 +39,4 @@ void RenderWall(float x, float y, float z, float translate_x, float translate_y,
                 float translate_z);
 void Reset();
 
-#endif  // CS4550_HOMEWORK_TWO_H_
+#endif  // CS4550_HOMEWORK_2_H_

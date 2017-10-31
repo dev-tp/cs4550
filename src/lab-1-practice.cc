@@ -70,7 +70,7 @@ void Setup() {
 
 int main(int argc, char* argv[]) {
   glutInit(&argc, argv);
-  CreateWindow("Lab 1", Setup);
+  CreateWindow("Lab 1 (Practice)", Setup);
 
   return 0;
 }

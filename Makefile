@@ -8,40 +8,40 @@ SRCDIR := src
 SOURCES := $(wildcard $(SRCDIR)/*.cc)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.cc=$(BLDDIR)/%.o)
 
-all: $(BLDDIR) lab-one lab-two lab-three lab-four lab-five lab-six lab-seven \
- lab-eight lab-nine homework-one homework-two
+all: $(BLDDIR) lab-1-practice lab-1 lab-2-practice lab-2 lab-3 lab-4 lab-5 \
+ lab-6 lab-8 homework-1 homework-2
 
-homework-one: $(BLDDIR)/homework-one.o
+homework-1: $(BLDDIR)/homework-1.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-homework-two: $(BLDDIR)/homework-two.o
+homework-2: $(BLDDIR)/homework-2.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-lab-one: $(addprefix $(BLDDIR)/, lab-one.o opengl-window.o)
+lab-1-practice: $(addprefix $(BLDDIR)/, lab-1-practice.o opengl-window.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-lab-two: $(addprefix $(BLDDIR)/, lab-two.o opengl-window.o)
+lab-1: $(addprefix $(BLDDIR)/, lab-1.o opengl-window.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-lab-three: $(addprefix $(BLDDIR)/, lab-three.o opengl-window.o)
+lab-2-practice: $(addprefix $(BLDDIR)/, lab-2-practice.o opengl-window.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-lab-four: $(addprefix $(BLDDIR)/, lab-four.o opengl-window.o)
+lab-2: $(addprefix $(BLDDIR)/, lab-2.o opengl-window.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-lab-five: $(addprefix $(BLDDIR)/, lab-five.o opengl-window.o)
+lab-3: $(addprefix $(BLDDIR)/, lab-3.o opengl-window.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-lab-six: $(BLDDIR)/lab-six.o
+lab-4: $(BLDDIR)/lab-4.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-lab-seven: $(BLDDIR)/lab-seven.o
+lab-5: $(BLDDIR)/lab-5.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-lab-eight: $(addprefix $(BLDDIR)/, lab-eight.o mesh.o)
+lab-6: $(addprefix $(BLDDIR)/, lab-6.o mesh.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-lab-nine: $(addprefix $(BLDDIR)/, lab-nine.o camera.o)
+lab-8: $(addprefix $(BLDDIR)/, lab-8.o camera.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 test: test/test-gl.cc $(BLDDIR)/opengl-window.o

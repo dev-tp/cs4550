@@ -1,5 +1,5 @@
-#ifndef CS4550_LAB_NINE_H_
-#define CS4550_LAB_NINE_H_
+#ifndef CS4550_LAB_8_H_
+#define CS4550_LAB_8_H_
 
 #include "camera.h"
 
@@ -15,4 +15,4 @@ float rotation_angle = 0.0f;
 float x_position = 0.0f;
 float z_position = 0.0f;
 
-#endif  // CS4550_LAB_NINE_H_
+#endif  // CS4550_LAB_8_H_

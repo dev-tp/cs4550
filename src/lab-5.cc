@@ -1,4 +1,4 @@
-#include "lab-seven.h"
+#include "lab-5.h"
 
 #include <math.h>
 #include <unistd.h>
@@ -173,7 +173,7 @@ int main(int argc, char* argv[]) {
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
   glutInitWindowPosition(POSITION_X, POSITION_Y);
-  glutCreateWindow("Lab 7");
+  glutCreateWindow("Lab 5");
 
   Initialize();
 
