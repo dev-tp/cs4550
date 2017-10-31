@@ -57,7 +57,7 @@ public:
     z = dz;
   }
 
-  void Set(Vector3& v) {
+  void Set(const Vector3& v) {
     x = v.x;
     y = v.y;
     z = v.z;

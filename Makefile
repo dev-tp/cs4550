@@ -9,7 +9,7 @@ SOURCES := $(wildcard $(SRCDIR)/*.cc)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.cc=$(BLDDIR)/%.o)
 
 all: $(BLDDIR) lab-one lab-two lab-three lab-four lab-five lab-six lab-seven \
- lab-eight homework-one homework-two
+ lab-eight lab-nine homework-one homework-two
 
 homework-one: $(BLDDIR)/homework-one.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
@@ -39,6 +39,9 @@ lab-seven: $(BLDDIR)/lab-seven.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 lab-eight: $(addprefix $(BLDDIR)/, lab-eight.o mesh.o)
+	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
+
+lab-nine: $(addprefix $(BLDDIR)/, lab-nine.o camera.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 test: test/test-gl.cc $(BLDDIR)/opengl-window.o
