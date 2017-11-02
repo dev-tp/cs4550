@@ -1,5 +1,5 @@
 CC := g++
-CFLAGS := -std=c++11 -Wall -c
+CFLAGS := -std=c++11 -Wall -c -g
 LDLIBS := -lGL -lGLU -lglut
 
 BLDDIR := build
