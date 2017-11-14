@@ -3,7 +3,8 @@
 #include <GL/glut.h>
 
 void Display() {
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glDisable(GL_LIGHTING);
 
   glBegin(GL_LINES);
 
@@ -21,11 +22,45 @@ void Display() {
 
   glEnd();
 
+  glEnable(GL_LIGHTING);
+
   glPushMatrix();
-  glColor3f(1.0f, 1.0f, 1.0f);
+
+  float ambient[] = {0.24725f, 0.1995f, 0.0745f, 1.0f};
+  float diffusion[] = {0.75164f, 0.60648f, 0.22648f, 1.0f};
+  float specular[] = {0.628281f, 0.555802f, 0.366065f, 1.0f};
+  float shine = 0.4f * 128.0f;
+
+  glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, diffusion);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+  glMaterialf(GL_FRONT, GL_SHININESS, shine);
+
   glTranslatef(x_position, 0.0f, z_position);
   glRotatef(rotation_angle, 0.0f, 1.0f, 0.0f);
-  glutWireTeapot(1.0);
+  glutSolidTeapot(1.0);
+  glPopMatrix();
+
+  glPushMatrix();
+
+  ambient[0] = 0.19225f;
+  ambient[1] = 0.19225f;
+  ambient[2] = 0.19225f;
+  diffusion[0] = 0.50754f;
+  diffusion[1] = 0.50754f;
+  diffusion[2] = 0.50754f;
+  specular[0] = 0.508273f;
+  specular[1] = 0.508273f;
+  specular[2] = 0.508273f;
+
+  glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, diffusion);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+  glMaterialf(GL_FRONT, GL_SHININESS, shine);
+
+  glTranslatef(x_position, 0.0f, z_position - 3.0f);
+  glRotatef(rotation_angle, 0.0f, 1.0f, 0.0f);
+  glutSolidTeapot(1.0);
   glPopMatrix();
 
   glutSwapBuffers();
@@ -34,6 +69,17 @@ void Display() {
 void Initialize() {
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glColor3f(1.0f, 1.0f, 1.0f);
+
+  float light_position[] = {1.0f, 1.0f, 1.0f, 10.0f};
+  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_NORMALIZE);
+  glEnable(GL_DEPTH_TEST);
+
+  glEnable(GL_COLOR_MATERIAL);
+  glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
