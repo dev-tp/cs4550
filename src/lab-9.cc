@@ -1,4 +1,6 @@
-#include "lab-8.h"
+#include "lab-9.h"
+
+#include <unistd.h>
 
 #include <GL/glut.h>
 
@@ -24,8 +26,11 @@ void Display() {
 
   glEnable(GL_LIGHTING);
 
+  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
   glPushMatrix();
 
+  // Why doesn't it change color!?
   float ambient[] = {0.24725f, 0.1995f, 0.0745f, 1.0f};
   float diffusion[] = {0.75164f, 0.60648f, 0.22648f, 1.0f};
   float specular[] = {0.628281f, 0.555802f, 0.366065f, 1.0f};
@@ -66,11 +71,19 @@ void Display() {
   glutSwapBuffers();
 }
 
+void Idle() {
+  if (move_light) {
+    light_position[0] += 1.0f;
+    light_position[1] += 1.0f;
+    usleep(100000);
+    glutPostRedisplay();
+  }
+}
+
 void Initialize() {
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glColor3f(1.0f, 1.0f, 1.0f);
 
-  float light_position[] = {1.0f, 1.0f, 1.0f, 10.0f};
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
   glEnable(GL_LIGHTING);
@@ -90,7 +103,9 @@ void Initialize() {
 }
 
 void RegisterKey(unsigned char key, int x, int y) {
-  if (key == 'e') {
+  if (key == 'a') {
+    move_light = !move_light;
+  } else if (key == 'e') {
     rotation_angle += 1.0;
   } else if (key == 'E') {
     rotation_angle -= 1.0;
@@ -139,9 +154,10 @@ int main(int argc, char* argv[]) {
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
   glutInitWindowPosition(POSITION_X, POSITION_Y);
-  glutCreateWindow("Lab 8");
+  glutCreateWindow("Lab 9");
 
   glutDisplayFunc(Display);
+  glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKey);
   glutSpecialFunc(RegisterSpecialKey);
 
