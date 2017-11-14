@@ -30,7 +30,6 @@ void Display() {
 
   glPushMatrix();
 
-  // Why doesn't it change color!?
   float ambient[] = {0.24725f, 0.1995f, 0.0745f, 1.0f};
   float diffusion[] = {0.75164f, 0.60648f, 0.22648f, 1.0f};
   float specular[] = {0.628281f, 0.555802f, 0.366065f, 1.0f};
@@ -90,9 +89,6 @@ void Initialize() {
   glEnable(GL_LIGHT0);
   glEnable(GL_NORMALIZE);
   glEnable(GL_DEPTH_TEST);
-
-  glEnable(GL_COLOR_MATERIAL);
-  glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
