@@ -1,9 +1,13 @@
 #include "homework-3.h"
 
+#include <math.h>
+
 #include "vector3.h"
 
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  camera.Set(Point3(look_x, look_y, look_z));
 
   glBegin(GL_LINES);
 
@@ -38,8 +42,7 @@ void Initialize() {
   glLoadIdentity();
   gluPerspective(50.0f, (float) SCREEN_WIDTH / SCREEN_HEIGHT, 0.5f, 200.0f);
 
-  camera.Set(Point3(0.0f, 0.0f, 10.0f), Point3(0.0f, 0.0f, 0.0f),
-             Vector3(0.0f, 1.0f, 0.0f));
+  camera.Set(Point3(look_x, look_y, look_z));
 }
 
 void RegisterMouseEvent(int button, int state, int x, int y) {
@@ -51,6 +54,30 @@ void RegisterMouseEvent(int button, int state, int x, int y) {
 
     glutPostRedisplay();
   }
+
+  if (button == GLUT_MIDDLE_BUTTON) {
+    if (state == GLUT_DOWN) {
+      x_origin = x;
+      y_origin = y;
+    } else {
+      theta += delta_theta;
+      phi += delta_phi;
+
+      x_origin = 0;
+      y_origin = 0;
+    }
+  }
+}
+
+void RegisterMouseMotionEvent(int x, int y) {
+  delta_theta = (x - x_origin) * 0.01f;
+  delta_phi = (y - y_origin) * 0.01f;
+
+  look_x = 10.0f * cos(phi + delta_phi) * sin(theta + delta_theta);
+  look_y = 10.0f * sin(phi + delta_phi) * sin(theta + delta_theta);
+  look_z = 10.0f * cos(theta + delta_theta);
+
+  glutPostRedisplay();
 }
 
 int main(int argc, char* argv[]) {
@@ -61,6 +88,7 @@ int main(int argc, char* argv[]) {
   glutCreateWindow("Homework 3");
 
   glutDisplayFunc(Display);
+  glutMotionFunc(RegisterMouseMotionEvent);
   glutMouseFunc(RegisterMouseEvent);
 
   Initialize();

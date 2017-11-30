@@ -18,7 +18,8 @@ public:
 
   void Pitch(float angle);
   void Roll(float angle);
-  void Set(Point3 eye, Point3 look, Vector3 up);
+  void Set(Point3 eye, Point3 look = Point3(),
+           Vector3 up = Vector3(0.0f, 1.0f, 0.0f));
   void Slide(float du, float dv, float dn);
   void Yaw(float angle);
 };
