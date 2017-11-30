@@ -7,8 +7,6 @@
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  camera.Set(Point3(look_x, look_y, look_z));
-
   glBegin(GL_LINES);
 
   glColor3f(1.0f, 0.0f, 0.0f);
@@ -51,11 +49,7 @@ void RegisterMouseEvent(int button, int state, int x, int y) {
     float dy = (SCREEN_HEIGHT - y) * 10.0f / SCREEN_HEIGHT - 10.0f / 2.0f;
 
     clicked_points.push_back(Point3(dx, dy));
-
-    glutPostRedisplay();
-  }
-
-  if (button == GLUT_MIDDLE_BUTTON) {
+  } else if (button == GLUT_MIDDLE_BUTTON) {
     if (state == GLUT_DOWN) {
       register_motion = true;
 
@@ -70,7 +64,21 @@ void RegisterMouseEvent(int button, int state, int x, int y) {
       x_origin = 0;
       y_origin = 0;
     }
+
+    return;
+  } else if (button == GLUT_SCROLL_DOWN && state == GLUT_DOWN) {
+    rho = camera.GetDistanceFromOrigin();
+
+    if (rho > 1) {
+      camera.Slide(0.0f, 0.0f, -1.0f);
+    }
+
+  } else if (button == GLUT_SCROLL_UP && state == GLUT_DOWN) {
+    camera.Slide(0.0f, 0.0f, 1.0f);
+    rho = camera.GetDistanceFromOrigin();
   }
+
+  glutPostRedisplay();
 }
 
 void RegisterMouseMotionEvent(int x, int y) {
@@ -78,9 +86,11 @@ void RegisterMouseMotionEvent(int x, int y) {
     delta_theta = (x - x_origin) * 0.01f;
     delta_phi = (y - y_origin) * 0.01f;
 
-    look_x = 10.0f * cos(phi + delta_phi) * sin(theta + delta_theta);
-    look_y = 10.0f * sin(phi + delta_phi) * sin(theta + delta_theta);
-    look_z = 10.0f * cos(theta + delta_theta);
+    look_x = rho * cos(phi + delta_phi) * sin(theta + delta_theta);
+    look_y = rho * sin(phi + delta_phi) * sin(theta + delta_theta);
+    look_z = rho * cos(theta + delta_theta);
+
+    camera.Set(Point3(look_x, look_y, look_z));
 
     glutPostRedisplay();
   }

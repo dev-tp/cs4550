@@ -85,6 +85,10 @@ void Camera::Yaw(float angle) {
   ApplyTransformation(angle, u, n);
 }
 
+float Camera::GetDistanceFromOrigin() {
+  return sqrt(powf(eye.x, 2.0f) + powf(eye.y, 2.0f) + powf(eye.z, 2.0f));
+}
+
 void SetShape(float angle, float asp, float near_d, float far_d) {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();

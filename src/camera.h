@@ -16,6 +16,7 @@ public:
   Camera() { }
   ~Camera() { }
 
+  float GetDistanceFromOrigin();
   void Pitch(float angle);
   void Roll(float angle);
   void Set(Point3 eye, Point3 look = Point3(),
