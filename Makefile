@@ -9,12 +9,15 @@ SOURCES := $(wildcard $(SRCDIR)/*.cc)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.cc=$(BLDDIR)/%.o)
 
 all: $(BLDDIR) lab-1-practice lab-1 lab-2-practice lab-2 lab-3 lab-4 lab-5 \
- lab-6 lab-8 lab-9 homework-1 homework-2
+ lab-6 lab-8 lab-9 homework-1 homework-2 homework-3
 
 homework-1: $(BLDDIR)/homework-1.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 homework-2: $(BLDDIR)/homework-2.o
+	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
+
+homework-3: $(BLDDIR)/homework-3.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 lab-1-practice: $(addprefix $(BLDDIR)/, lab-1-practice.o opengl-window.o)
