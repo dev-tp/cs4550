@@ -57,9 +57,13 @@ void RegisterMouseEvent(int button, int state, int x, int y) {
 
   if (button == GLUT_MIDDLE_BUTTON) {
     if (state == GLUT_DOWN) {
+      register_motion = true;
+
       x_origin = x;
       y_origin = y;
     } else {
+      register_motion = false;
+
       theta += delta_theta;
       phi += delta_phi;
 
@@ -70,14 +74,16 @@ void RegisterMouseEvent(int button, int state, int x, int y) {
 }
 
 void RegisterMouseMotionEvent(int x, int y) {
-  delta_theta = (x - x_origin) * 0.01f;
-  delta_phi = (y - y_origin) * 0.01f;
+  if (register_motion) {
+    delta_theta = (x - x_origin) * 0.01f;
+    delta_phi = (y - y_origin) * 0.01f;
 
-  look_x = 10.0f * cos(phi + delta_phi) * sin(theta + delta_theta);
-  look_y = 10.0f * sin(phi + delta_phi) * sin(theta + delta_theta);
-  look_z = 10.0f * cos(theta + delta_theta);
+    look_x = 10.0f * cos(phi + delta_phi) * sin(theta + delta_theta);
+    look_y = 10.0f * sin(phi + delta_phi) * sin(theta + delta_theta);
+    look_z = 10.0f * cos(theta + delta_theta);
 
-  glutPostRedisplay();
+    glutPostRedisplay();
+  }
 }
 
 int main(int argc, char* argv[]) {

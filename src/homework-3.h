@@ -14,6 +14,8 @@
 #define POSITION_X (glutGet(GLUT_SCREEN_WIDTH) - SCREEN_WIDTH) / 2
 #define POSITION_Y (glutGet(GLUT_SCREEN_HEIGHT) - SCREEN_HEIGHT) / 2
 
+bool register_motion = false;
+
 float delta_phi = 0.0f;
 float delta_theta = 0.0f;
 float phi = 0.0f;
