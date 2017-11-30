@@ -1,6 +1,5 @@
 #include "homework-3.h"
 
-#include "point3.h"
 #include "vector3.h"
 
 void Display() {
@@ -22,6 +21,15 @@ void Display() {
 
   glEnd();
 
+  glBegin(GL_POINTS);
+  glColor3f(1.0f, 1.0f, 1.0f);
+
+  for (Point3 point : clicked_points) {
+    glVertex3f(point.x, point.y, point.z);
+  }
+
+  glEnd();
+
   glutSwapBuffers();
 }
 
@@ -30,8 +38,19 @@ void Initialize() {
   glLoadIdentity();
   gluPerspective(50.0f, (float) SCREEN_WIDTH / SCREEN_HEIGHT, 0.5f, 200.0f);
 
-  camera.Set(Point3(0.0f, 0.0f, 4.0f), Point3(0.0f, 0.0f, 0.0f),
+  camera.Set(Point3(0.0f, 0.0f, 10.0f), Point3(0.0f, 0.0f, 0.0f),
              Vector3(0.0f, 1.0f, 0.0f));
+}
+
+void RegisterMouseEvent(int button, int state, int x, int y) {
+  if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+    float dx = x * 10.0f / SCREEN_WIDTH - 10.0f / 2.0f;
+    float dy = (SCREEN_HEIGHT - y) * 10.0f / SCREEN_HEIGHT - 10.0f / 2.0f;
+
+    clicked_points.push_back(Point3(dx, dy));
+
+    glutPostRedisplay();
+  }
 }
 
 int main(int argc, char* argv[]) {
@@ -42,6 +61,7 @@ int main(int argc, char* argv[]) {
   glutCreateWindow("Homework 3");
 
   glutDisplayFunc(Display);
+  glutMouseFunc(RegisterMouseEvent);
 
   Initialize();
 

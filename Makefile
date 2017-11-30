@@ -17,7 +17,7 @@ homework-1: $(BLDDIR)/homework-1.o
 homework-2: $(BLDDIR)/homework-2.o
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
-homework-3: $(BLDDIR)/homework-3.o
+homework-3: $(addprefix $(BLDDIR)/, homework-3.o camera.o)
 	$(CC) $^ $(LDLIBS) -o $(BLDDIR)/$@
 
 lab-1-practice: $(addprefix $(BLDDIR)/, lab-1-practice.o opengl-window.o)
