@@ -102,6 +102,12 @@ void RegisterKeyboardEvent(unsigned char key, int x, int y) {
 
       break;
     }
+    case 'f': {
+      rho = look_z = 10.0f;
+      camera.Set(Point3(look_x, look_y, look_z));
+      glutPostRedisplay();
+      break;
+    }
     case 'g': {
       material = material == 0 ? 1 : 0;
       glutPostRedisplay();
