@@ -23,14 +23,19 @@ void Display() {
 
   glEnd();
 
-  glBegin(GL_POINTS);
   glColor3f(1.0f, 1.0f, 1.0f);
 
-  for (Point3 point : clicked_points) {
-    glVertex3f(point.x, point.y, point.z);
-  }
+  if (spin) {
+    Spin();
+  } else {
+    glBegin(GL_POINTS);
 
-  glEnd();
+    for (Point3 point : clicked_points) {
+      glVertex3f(point.x, point.y, point.z);
+    }
+
+    glEnd();
+  }
 
   glutSwapBuffers();
 }
@@ -44,7 +49,7 @@ void Initialize() {
 }
 
 void RegisterMouseEvent(int button, int state, int x, int y) {
-  if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+  if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && !spin) {
     float dx = x * 10.0f / SCREEN_WIDTH - 10.0f / 2.0f;
     float dy = (SCREEN_HEIGHT - y) * 10.0f / SCREEN_HEIGHT - 10.0f / 2.0f;
 
@@ -76,6 +81,8 @@ void RegisterMouseEvent(int button, int state, int x, int y) {
   } else if (button == GLUT_SCROLL_UP && state == GLUT_DOWN) {
     camera.Slide(0.0f, 0.0f, 1.0f);
     rho = camera.GetDistanceFromOrigin();
+  } else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN && !spin) {
+    spin = true;
   }
 
   glutPostRedisplay();
@@ -93,6 +100,49 @@ void RegisterMouseMotionEvent(int x, int y) {
     camera.Set(Point3(look_x, look_y, look_z));
 
     glutPostRedisplay();
+  }
+}
+
+void Spin(int segments) {
+  float previous_theta = 0.0f;
+
+  for (int i = 0; i <= segments; i++) {
+    float theta = 0 < i ? (360.0f / segments) * i : 0.0f;
+    theta *= (M_PI / 180.0f);
+
+    if (clicked_points.size() > 1) {
+      glBegin(GL_LINE_STRIP);
+
+      for (Point3 point : clicked_points) {
+        float x = (point.x * cos(theta)) + (point.z * sin(theta));
+        float z = (point.z * cos(theta)) - (point.x * sin(theta));
+
+        glVertex3f(x, point.y, z);
+      }
+
+      glEnd();
+
+      if (previous_theta != theta) {
+        glBegin(GL_LINES);
+
+        for (Point3 point : clicked_points) {
+          float x = (point.x * cos(theta)) + (point.z * sin(theta));
+          float z = (point.z * cos(theta)) - (point.x * sin(theta));
+
+          float dx = (point.x * cos(previous_theta)) +
+              (point.z * sin(previous_theta));
+          float dz = (point.z * cos(previous_theta)) -
+              (point.x * sin(previous_theta));
+
+          glVertex3f(x, point.y, z);
+          glVertex3f(dx, point.y, dz);
+        }
+
+        glEnd();
+      }
+    }
+
+    previous_theta = theta;
   }
 }
 

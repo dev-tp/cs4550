@@ -18,6 +18,7 @@
 #define GLUT_SCROLL_UP 4
 
 bool register_motion = false;
+bool spin = false;
 
 float delta_phi = 0.0f;
 float delta_theta = 0.0f;
@@ -35,5 +36,7 @@ int y_origin = 0;
 Camera camera;
 
 std::vector<Point3> clicked_points;
+
+void Spin(int segments = 32);
 
 #endif  // CS4550_HOMEWORK_3_H_
