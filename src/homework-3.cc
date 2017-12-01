@@ -6,6 +6,7 @@
 
 void Display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glDisable(GL_LIGHTING);
 
   glBegin(GL_LINES);
 
@@ -23,7 +24,12 @@ void Display() {
 
   glEnd();
 
-  glColor3f(1.0f, 1.0f, 1.0f);
+  glEnable(GL_LIGHTING);
+
+  glMaterialfv(GL_FRONT, GL_AMBIENT, ambient[material]);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, diffusion[material]);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, specular[material]);
+  glMaterialf(GL_FRONT, GL_SHININESS, shine[material] * 128.0f);
 
   if (spin) {
     Spin();
@@ -41,6 +47,33 @@ void Display() {
 }
 
 void Initialize() {
+  float light_position[] = {10.0f, 0.0f, 0.0f, 1.0f};
+  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+  light_position[0] = -10.0f;
+  light_position[1] = 0.0f;
+  light_position[2] = -10.0f;
+  SetLight(GL_LIGHT1, light_position);
+
+  light_position[0] = 10.0f;
+  light_position[1] = 0.0f;
+  light_position[2] = 10.0f;
+  SetLight(GL_LIGHT2, light_position);
+
+  light_position[0] = 0.0f;
+  light_position[1] = -10.0f;
+  light_position[2] = 0.0f;
+  SetLight(GL_LIGHT3, light_position);
+
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_LIGHT1);
+  glEnable(GL_LIGHT2);
+  glEnable(GL_LIGHT3);
+
+  glEnable(GL_NORMALIZE);
+  glEnable(GL_DEPTH_TEST);
+
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   gluPerspective(50.0f, (float) SCREEN_WIDTH / SCREEN_HEIGHT, 0.5f, 200.0f);
@@ -63,6 +96,11 @@ void RegisterKeyboardEvent(unsigned char key, int x, int y) {
 
       glutPostRedisplay();
 
+      break;
+    }
+    case 'g': {
+      material = material == 0 ? 1 : 0;
+      glutPostRedisplay();
       break;
     }
     default: {
@@ -124,6 +162,18 @@ void RegisterMouseMotionEvent(int x, int y) {
 
     glutPostRedisplay();
   }
+}
+
+void SetLight(int light_source, float position[]) {
+  float light_ambient[] = {0.2, 0.2, 0.2, 1.0};
+  float light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+  float light_specular[] = {1.0, 1.0, 1.0, 1.0};
+
+  glLightfv(light_source, GL_AMBIENT, light_ambient);
+  glLightfv(light_source, GL_DIFFUSE, light_diffuse);
+  glLightfv(light_source, GL_SPECULAR, light_specular);
+
+  glLightfv(light_source, GL_POSITION, position);
 }
 
 void Spin(int segments) {
