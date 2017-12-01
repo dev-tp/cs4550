@@ -31,13 +31,17 @@ void Display() {
   glMaterialfv(GL_FRONT, GL_SPECULAR, specular[material]);
   glMaterialf(GL_FRONT, GL_SHININESS, shine[material] * 128.0f);
 
+  int num_of_points = clicked_points.size();
+
   if (spin) {
     Spin();
-  } else {
-    glBegin(GL_POINTS);
+  } else if (num_of_points > 1) {
+    glBegin(GL_LINES);
 
-    for (Point3 point : clicked_points) {
-      glVertex3f(point.x, point.y, point.z);
+    for (int i = 0; i < num_of_points - 1; i++) {
+      glVertex3f(clicked_points[i].x, clicked_points[i].y, clicked_points[i].z);
+      glVertex3f(clicked_points[i + 1].x, clicked_points[i + 1].y,
+                 clicked_points[i + 1].z);
     }
 
     glEnd();
