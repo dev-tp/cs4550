@@ -1,6 +1,7 @@
 #include "homework-3.h"
 
 #include <math.h>
+#include <unistd.h>
 
 #include "vector3.h"
 
@@ -48,6 +49,23 @@ void Display() {
   }
 
   glutSwapBuffers();
+}
+
+void Idle() {
+  if (display_mode) {
+    usleep(50000);
+
+    theta += 0.01f;
+    phi += 0.01f;
+
+    look_x = 10.0f * sin(theta);
+    look_y = 10.0f * sin(phi) * sin(theta);
+    look_z = 10.0f * cos(theta);
+
+    camera.Set(Point3(look_x, look_y, look_z));
+
+    glutPostRedisplay();
+  }
 }
 
 void Initialize() {
@@ -111,6 +129,10 @@ void RegisterKeyboardEvent(unsigned char key, int x, int y) {
     case 'g': {
       material = material == 0 ? 1 : 0;
       glutPostRedisplay();
+      break;
+    }
+    case 'm': {
+      display_mode = !display_mode;
       break;
     }
     default: {
@@ -237,6 +259,7 @@ int main(int argc, char* argv[]) {
   glutCreateWindow("Homework 3");
 
   glutDisplayFunc(Display);
+  glutIdleFunc(Idle);
   glutKeyboardFunc(RegisterKeyboardEvent);
   glutMotionFunc(RegisterMouseMotionEvent);
   glutMouseFunc(RegisterMouseEvent);

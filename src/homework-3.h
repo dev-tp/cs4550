@@ -17,6 +17,7 @@
 #define GLUT_SCROLL_DOWN 3
 #define GLUT_SCROLL_UP 4
 
+bool display_mode = false;
 bool register_motion = false;
 bool spin = false;
 
