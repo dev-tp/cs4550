@@ -48,6 +48,29 @@ void Initialize() {
   camera.Set(Point3(look_x, look_y, look_z));
 }
 
+void RegisterKeyboardEvent(unsigned char key, int x, int y) {
+  switch (key) {
+    case 'c': {
+      clicked_points.clear();
+
+      look_x = 0.0f;
+      look_y = 0.0f;
+      look_z = 10.0f;
+
+      spin = false;
+
+      camera.Set(Point3(look_x, look_y, look_z));
+
+      glutPostRedisplay();
+
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+}
+
 void RegisterMouseEvent(int button, int state, int x, int y) {
   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && !spin) {
     float dx = x * 10.0f / SCREEN_WIDTH - 10.0f / 2.0f;
@@ -154,6 +177,7 @@ int main(int argc, char* argv[]) {
   glutCreateWindow("Homework 3");
 
   glutDisplayFunc(Display);
+  glutKeyboardFunc(RegisterKeyboardEvent);
   glutMotionFunc(RegisterMouseMotionEvent);
   glutMouseFunc(RegisterMouseEvent);
 
